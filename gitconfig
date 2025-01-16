@@ -1,0 +1,9 @@
+[user]
+	email = bleazint@gmail.com
+	name = Jane
+[core]
+	editor = ~/Documents/nvim-10.0.2/bin/nvim
+[merge "ours"]
+	driver = true
+[init]
+	defaultBranch = main
