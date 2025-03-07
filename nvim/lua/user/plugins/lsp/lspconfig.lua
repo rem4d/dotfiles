@@ -88,10 +88,30 @@ return {
 			on_attach = on_attach,
 		})
 
+		-- configure docker
+		lspconfig["docker_compose_language_service"].setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
+		lspconfig["dockerls"].setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
+
 		-- configure tailwindcss server
 		lspconfig["tailwindcss"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
+			settings = {
+				tailwindCSS = {
+					experimental = {
+						classRegex = {
+							{ "cva\\(((?:[^()]|\\([^()]*\\))*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
+							{ "cx\\(((?:[^()]|\\([^()]*\\))*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" },
+						},
+					},
+				},
+			},
 		})
 
 		-- configure svelte server

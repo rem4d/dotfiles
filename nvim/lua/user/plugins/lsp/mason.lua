@@ -31,10 +31,11 @@ return {
 				"html",
 				"cssls",
 				"tailwindcss",
-				"svelte",
 				"lua_ls",
 				"graphql",
 				"emmet_ls",
+				"docker_compose_language_service",
+				"marksman",
 			},
 			-- auto-install configured servers (with lspconfig)
 			automatic_installation = true, -- not the same as ensure_installed
@@ -47,6 +48,7 @@ return {
 				"stylua", -- lua formatter
 				"eslint_d", -- js linter
 				"biome", -- js linter
+				"hadolint",
 			},
 		})
 	end,

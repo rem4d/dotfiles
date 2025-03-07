@@ -7,6 +7,7 @@ return {
 	},
 	"wellle/targets.vim",
 	"sindrets/diffview.nvim",
+	"lambdalisue/vim-suda",
 	-- "tpope/vim-fugitive",
 	-- {
 	-- 	"nvim-telescope/telescope-fzf-native.nvim",

@@ -98,6 +98,9 @@ map("v", ">", ">gv")
 -- Keep last yanked when pasting
 map("v", "p", '"_dP')
 
+-- Move cursor at the end of yanked selection
+map("v", "y", "y`]")
+
 -- Copy/paste
 map("n", "<C-y>", '"*y')
 map("x", "<C-y>", '"*y')
