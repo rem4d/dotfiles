@@ -8,6 +8,7 @@ return {
 	"wellle/targets.vim",
 	"sindrets/diffview.nvim",
 	"lambdalisue/vim-suda",
+	-- "github/copilot.vim",
 	-- "tpope/vim-fugitive",
 	-- {
 	-- 	"nvim-telescope/telescope-fzf-native.nvim",

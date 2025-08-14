@@ -48,7 +48,8 @@ export NVM_DIR="$HOME/.nvm"
 
 alias git='LC_ALL=en_GB git'
 alias nvi='~/Documents/nvim-new/nvim-macos-x86_64/bin/nvim'
-alias nvim='~/Documents/nvim-10.0.2/bin/nvim'
+# alias nvim='~/Documents/nvim-10.0.2/bin/nvim'
+alias nvim='~/Documents/NVIM/nvim-macos-x86_64/bin/nvim'
 
 #fzf
 # Set up fzf key bindings and fuzzy completion
