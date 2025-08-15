@@ -1,5 +1,7 @@
 vim.lsp.enable({
 	"vtsls",
+	"lua_ls",
+	"tailwindcss",
 })
 
 vim.diagnostic.config({
