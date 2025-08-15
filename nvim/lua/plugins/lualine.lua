@@ -1,25 +1,30 @@
 return {
 	"nvim-lualine/lualine.nvim",
-	dependencies = { "nvim-tree/nvim-web-devicons" },
-	config = function()
-		local lualine = require("lualine")
-		local lazy_status = require("lazy.status") -- to configure lazy pending updates count
-
-		-- configure lualine with modified theme
-		lualine.setup({
-			theme = "tokyonight",
-			sections = {
-				lualine_x = {
-					{
-						lazy_status.updates,
-						cond = lazy_status.has_updates,
-						color = { fg = "#ff9e64" },
-					},
-					{ "encoding" },
-					{ "fileformat" },
-					{ "filetype" },
-				},
+	dependencies = { "nvim-tree/nvim-web-devicons", "meuter/lualine-so-fancy.nvim" },
+	opts = {
+		options = {
+			theme = "seoul256",
+			component_separators = { left = "│", right = "│" },
+			section_separators = { left = "", right = "" },
+		},
+		sections = {
+			lualine_a = {},
+			lualine_b = {
+				{ "fancy_branch" },
 			},
-		})
-	end,
+			lualine_c = {
+				{ "fancy_cwd", substitute_home = true },
+				{ "filename", path = 1 },
+			},
+			lualine_x = {
+				{ "fancy_macro" },
+				{ "fancy_diagnostics" },
+			},
+			lualine_y = {
+				{ "fancy_lsp_servers" },
+				{ "fancy_diff" },
+			},
+			lualine_z = {},
+		},
+	},
 }
