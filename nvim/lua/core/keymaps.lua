@@ -133,7 +133,8 @@ local opts = { noremap = true, silent = true }
 
 keymap.set({ "n", "v" }, "<leader>cx", vim.lsp.buf.code_action, opts) -- see available code actions, in visual mode will apply to selection
 keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts) -- show definition, references
-keymap.set("n", "gD", vim.lsp.buf.declaration, opts) -- go to declaration
+keymap.set("n", "gd", vim.lsp.buf.definition, opts) -- go to declaration
+keymap.set("n", "gi", vim.lsp.buf.implementation, opts) -- go to declaration
 keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts) -- smart rename
 
 -- 	opts.desc = "Show LSP definitions"

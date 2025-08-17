@@ -6,8 +6,7 @@ return {
 		event = "VeryLazy",
 	},
 	"wellle/targets.vim",
-	"sindrets/diffview.nvim",
-	"lambdalisue/vim-suda",
+	-- "lambdalisue/vim-suda",
 	-- "github/copilot.vim",
 	-- "tpope/vim-fugitive",
 	-- {
