@@ -62,3 +62,5 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+
+export AVANTE_OPENAI_API_KEY="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"
