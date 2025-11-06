@@ -50,6 +50,10 @@ alias git='LC_ALL=en_GB git'
 alias nvi='~/Documents/nvim-new/nvim-macos-x86_64/bin/nvim'
 # alias nvim='~/Documents/nvim-10.0.2/bin/nvim'
 alias nvim='~/Documents/NVIM/nvim-macos-x86_64/bin/nvim'
+alias postgrestools='~/Documents/postgrestools/postgrestools_x86_64-apple-darwin'
+alias python='python3'
+alias pip='pip3'
+
 
 #fzf
 # Set up fzf key bindings and fuzzy completion
@@ -63,4 +67,4 @@ case ":$PATH:" in
 esac
 # pnpm end
 
-export AVANTE_OPENAI_API_KEY="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"
+export PATH="/Users/jane/.local/bin:$PATH"

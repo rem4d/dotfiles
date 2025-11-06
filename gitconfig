@@ -2,7 +2,7 @@
 	email = bleazint@gmail.com
 	name = Jane
 [core]
-	editor = ~/Documents/nvim-10.0.2/bin/nvim
+	editor = vim
 [merge "ours"]
 	driver = true
 [init]

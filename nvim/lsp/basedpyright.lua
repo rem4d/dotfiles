@@ -1,0 +1,17 @@
+-- return {
+-- 	cmd = { "basedpyright-langserver", "--stdio" },
+-- 	filetypes = { "python" },
+-- 	settings = {
+-- 		basedpyright = {
+-- 			-- analysis = {
+-- 			-- 	autoSearchPaths = true,
+-- 			-- 	useLibraryCodeForTypes = true,
+-- 			-- 	diagnosticMode = "openFilesOnly",
+-- 			-- },
+-- 		},
+-- 		python = {
+-- 			venvPath = "/Users/jane/projects/pyright-test/venv",
+-- 			venv = "venv",
+-- 		},
+-- 	},
+-- }

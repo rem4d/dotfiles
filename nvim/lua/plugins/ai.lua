@@ -1,6 +1,7 @@
 return {
 	{
 		"supermaven-inc/supermaven-nvim",
+		enabled = true,
 		event = "InsertEnter",
 		cmd = {
 			"SupermavenUseFree",
@@ -62,13 +63,26 @@ return {
 	{ "nvim-lua/plenary.nvim", branch = "master" },
 	{
 		"olimorris/codecompanion.nvim",
-		enabled = false,
+		enabled = true,
 		opts = {
 			adapters = {
 				mistral = function()
 					return require("codecompanion.adapters").extend("mistral", {
 						env = {
 							api_key = "MISTRAL_API_KEY", -- Set your Mistral API key here
+						},
+					})
+				end,
+				codestral = function()
+					return require("codecompanion.adapters").extend("mistral", {
+						env = {
+							url = "https://codestral.mistral.ai",
+							api_key = "CODESTRAL_API_KEY",
+						},
+						schema = {
+							model = {
+								default = "codestral-latest",
+							},
 						},
 					})
 				end,
@@ -87,7 +101,7 @@ return {
 			},
 			strategies = {
 				chat = {
-					adapter = "mistral",
+					adapter = "codestral",
 				},
 				inline = {
 					adapter = "mistral",
@@ -117,7 +131,7 @@ return {
 		event = "VeryLazy",
 		version = false, -- Never set this value to "*"! Never!
 		opts = {
-			provider = "ollama",
+			provider = "copilot",
 			providers = {
 				ollama = {
 					endpoint = "http://127.0.0.1:11434",
@@ -128,19 +142,51 @@ return {
 						stream = true,
 					},
 				},
-				providers = {
-					openai = {
-						model = "gpt-4o", -- Or your preferred OpenAI model
-						api_key_name = "AVANTE_OPENAI_API_KEY", -- Environment variable name for your API key
-					},
+				copilot = {},
+				mistral = {
+					__inherited_from = "openai",
+					endpoint = "https://codestral.mistral.ai/v1/chat/completions",
+					model = "codestral-latest",
+					api_key_name = "CODESTRAL_API_KEY",
+					-- parse_curl_args = function(opts, code_opts)
+					-- 	local api_key = os.getenv(opts.api_key_name)
+					-- 	local Llm = require("avante.providers")
+					--
+					-- 	return {
+					-- 		url = opts.endpoint,
+					-- 		headers = {
+					-- 			["Accept"] = "application/json",
+					-- 			["Content-Type"] = "application/json",
+					-- 			["Authorization"] = "Bearer " .. api_key,
+					-- 		},
+					-- 		body = {
+					-- 			model = opts.model,
+					-- 			messages = Llm.openai.parse_message(code_opts),
+					-- 			temperature = 0.7,
+					-- 			max_tokens = 8192,
+					-- 			stream = true,
+					-- 			safe_prompt = false,
+					-- 		},
+					-- 	}
+					-- end,
+					-- parse_response_data = function(data_stream, event_state, opts)
+					-- 	local Llm = require("avante.providers")
+					-- 	Llm.openai.parse_response(data_stream, event_state, opts)
+					-- end,
 				},
-				copilot = {
-					-- model = "claude-3.7-sonnet-thought",
-					-- model = "claude-3.7-sonnet",
-					-- model = "copilot-gpt-4.1",
+				mistral2 = {
+					-- endpoint = "https://api.mistral.ai/v1/chat/completions",
+					-- model = "codestral-2501",
+					-- timeout = 15000,
+					-- extra_request_body = {
+					-- 	stream = true,
+					-- },
+					__inherited_from = "openai",
+					api_key_name = "MISTRAL_API_KEY",
+					endpoint = "https://api.mistral.ai/v1/",
+					model = "mistral-large-latest",
 					extra_request_body = {
-						temperature = 1,
-						max_tokens = 20000,
+						max_tokens = 4096, -- to avoid using max_completion_tokens
 					},
 				},
 			},

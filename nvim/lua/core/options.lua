@@ -25,13 +25,15 @@ opt.tabstop = 2 -- 1 tab == 2 spaces
 opt.autoindent = true -- copy indent from current line when starting new one
 opt.hidden = true -- Enable background buffers
 opt.history = 1000 -- Remember N lines in history
-opt.lazyredraw = true -- Faster scrolling
+-- opt.lazyredraw = true -- Faster scrolling
 opt.synmaxcol = 240 -- Max column for syntax highlight
 opt.updatetime = 250 -- ms to wait for trigger an event
 opt.swapfile = false -- Don't use swapfile
 opt.showtabline = 2 -- always show tabs
 opt.cursorline = false -- highlight the current line
-vim.opt.jumpoptions:remove("clean") -- open previously closed buffer with CTRL-O
+
+opt.jumpoptions:remove("clean") -- open previously closed buffer with CTRL-O
+opt.writebackup = false -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
 
 -- https://github.com/hendrikmi/dotfiles/blob/main/nvim/lua/core/options.lua
 

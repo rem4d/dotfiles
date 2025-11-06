@@ -153,3 +153,4 @@ keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts) -- show diagnostic
 keymap.set("n", "[d", vim.diagnostic.goto_prev, opts) -- jump to previous diagnostic in buffer
 keymap.set("n", "]d", vim.diagnostic.goto_next, opts) -- jump to next diagnostic in buffer
 keymap.set("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
+keymap.set("n", "ss", "<cmd>SupermavenToggle<CR>", opts)

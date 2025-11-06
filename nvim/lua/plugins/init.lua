@@ -6,6 +6,7 @@ return {
 		event = "VeryLazy",
 	},
 	"wellle/targets.vim",
+	"LunarVim/bigfile.nvim",
 	-- "lambdalisue/vim-suda",
 	-- "tpope/vim-fugitive",
 	-- {
