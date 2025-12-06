@@ -68,3 +68,6 @@ esac
 # pnpm end
 
 export PATH="/Users/jane/.local/bin:$PATH"
+
+# increase the memory limit for the node process.
+export NODE_OPTIONS=“--max-old-space-size=16384”

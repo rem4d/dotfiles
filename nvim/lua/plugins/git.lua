@@ -69,6 +69,6 @@ return {
 	},
 	{
 		"sindrets/diffview.nvim",
-		enabled = false,
+		enabled = true,
 	},
 }
