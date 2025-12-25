@@ -15,11 +15,13 @@ export ZSH=$HOME/.oh-my-zsh
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="robbyrussell"
 
+plugins=(git)
+
 # zplug, fzf has to be installed
 
 source ~/.zplug/init.zsh
 
-zplug "plugins/git", from:oh-my-zsh
+# zplug "plugins/git", from:oh-my-zsh
 zplug "plugins/history", from:oh-my-zsh
 
 zplug "zsh-users/zsh-autosuggestions"
@@ -42,15 +44,11 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 alias git='LC_ALL=en_GB git'
-alias gcl='git clone'
-alias gst='git status'
-alias gco='git checkout'
 
 alias nvim='~/Documents/nvim-macos-x86_64/bin/nvim'
 alias postgrestools='~/Documents/postgrestools/postgrestools_x86_64-apple-darwin'
 alias python='python3'
 alias pip='pip3'
-
 
 #fzf
 # Set up fzf key bindings and fuzzy completion
