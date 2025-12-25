@@ -1,15 +1,10 @@
 # Default path
 export PATH="/opt/homebrew:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
-# Allow any custom binaries
-export PATH="$HOME/bin:$PATH"
 
 # curl
-export PATH="/opt/homebrew/curl/bin:/usr/local/Casroom:$PATH"
+# export PATH="/opt/homebrew/curl/bin:/usr/local/Casroom:$PATH"
 
 export ZSH=$HOME/.oh-my-zsh
-
-# Cargo
-export PATH="$HOME/.cargo/bin:$PATH"
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
@@ -20,7 +15,7 @@ export ZSH=$HOME/.oh-my-zsh
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="robbyrussell"
 
-# zplug
+# zplug, fzf has to be installed
 
 source ~/.zplug/init.zsh
 
@@ -47,9 +42,11 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 alias git='LC_ALL=en_GB git'
-alias nvi='~/Documents/nvim-new/nvim-macos-x86_64/bin/nvim'
-# alias nvim='~/Documents/nvim-10.0.2/bin/nvim'
-alias nvim='~/Documents/NVIM/nvim-macos-x86_64/bin/nvim'
+alias gcl='git clone'
+alias gst='git status'
+alias gco='git checkout'
+
+alias nvim='~/Documents/nvim-macos-x86_64/bin/nvim'
 alias postgrestools='~/Documents/postgrestools/postgrestools_x86_64-apple-darwin'
 alias python='python3'
 alias pip='pip3'
@@ -60,14 +57,17 @@ alias pip='pip3'
 source <(fzf --zsh)
 
 # pnpm
-export PNPM_HOME="/Users/jane/Library/pnpm"
+export PNPM_HOME="/Users/rem/Library/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
 
-export PATH="/Users/jane/.local/bin:$PATH"
+export PATH="/Users/$USER/.local/bin:$HOME/.cargo/bin:$PATH"
 
 # increase the memory limit for the node process.
 export NODE_OPTIONS=“--max-old-space-size=16384”
+
+
+# ln -sf /Users/$USER/dotfiles/init.lua /Users/$USER/.config/nvim/init.lua

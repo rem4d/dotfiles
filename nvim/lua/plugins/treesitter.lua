@@ -1,56 +1,33 @@
 return {
-	{
-		"nvim-treesitter/nvim-treesitter",
-		-- event = { "BufReadPre", "BufNewFile" },
-		build = ":TSUpdate",
-		dependencies = {
-			"nvim-treesitter/nvim-treesitter-textobjects",
-			"andymass/vim-matchup",
-		},
-		config = function()
-			local treesitter = require("nvim-treesitter.configs")
+	"nvim-treesitter/nvim-treesitter",
+	lazy = false,
+	branch = "main",
+	build = ":TSUpdate",
+	config = function()
+		local parsers = {
+			"css",
+			"dockerfile",
+			"jsdoc",
+			"json",
+			"markdown",
+			"markdown_inline",
+			"python",
+			"tsx",
+			"typescript",
+			"yaml",
+		}
 
-			treesitter.setup({
-				auto_install = true,
-				highlight = { enable = true },
-				indent = { enable = true },
-				matchup = { enable = true },
-				ensure_installed = {
-					"bash",
-					"css",
-					"dockerfile",
-					"gitignore",
-					"graphql",
-					"html",
-					"javascript",
-					"json",
-					"lua",
-					"markdown",
-					"markdown_inline",
-					"prisma",
-					"python",
-					"query",
-					"sql",
-					"tmux",
-					"tsx",
-					"typescript",
-					"vim",
-					"yaml",
-					"jsdoc",
-				},
-				incremental_selection = {
-					enable = true,
-					keymaps = {
-						init_selection = "<C-space>",
-						node_incremental = "<C-space>",
-						scope_incremental = false,
-						node_decremental = "<bs>",
-					},
-				},
-			})
+		-- local ts = require("nvim-treesitter")
+		-- for _, parser in ipairs(parsers) do
+		-- 	ts.install(parser)
+		-- end
 
-			-- enable nvim-ts-context-commentstring plugin for commenting tsx and jsx
-			require("ts_context_commentstring").setup({})
-		end,
-	},
+		-- vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = parsers,
+			callback = function()
+				vim.treesitter.start()
+			end,
+		})
+	end,
 }
