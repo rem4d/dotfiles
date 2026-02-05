@@ -15,7 +15,7 @@ export ZSH=$HOME/.oh-my-zsh
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="robbyrussell"
 
-plugins=(git)
+plugins=(git z)
 
 # zplug, fzf has to be installed
 
@@ -69,3 +69,5 @@ export NODE_OPTIONS=“--max-old-space-size=16384”
 
 
 # ln -sf /Users/$USER/dotfiles/init.lua /Users/$USER/.config/nvim/init.lua
+export LANG="en_US.UTF-8"
+export LC_CTYPE="en_US.UTF-8"

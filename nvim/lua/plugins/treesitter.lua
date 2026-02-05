@@ -13,6 +13,7 @@ return {
 			"markdown_inline",
 			"python",
 			"tsx",
+			"javascript",
 			"typescript",
 			"yaml",
 		}
