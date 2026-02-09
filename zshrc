@@ -45,7 +45,7 @@ export NVM_DIR="$HOME/.nvm"
 
 alias git='LC_ALL=en_GB git'
 
-alias nvim='~/Documents/nvim-macos-x86_64/bin/nvim'
+alias nvim='/Users/$USER/Documents/nvim-macos-x86_64/bin/nvim'
 alias postgrestools='~/Documents/postgrestools/postgrestools_x86_64-apple-darwin'
 alias python='python3'
 alias pip='pip3'
@@ -55,7 +55,7 @@ alias pip='pip3'
 source <(fzf --zsh)
 
 # pnpm
-export PNPM_HOME="/Users/rem/Library/pnpm"
+export PNPM_HOME="/Users/$USER/Library/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
@@ -71,3 +71,7 @@ export NODE_OPTIONS=“--max-old-space-size=16384”
 # ln -sf /Users/$USER/dotfiles/init.lua /Users/$USER/.config/nvim/init.lua
 export LANG="en_US.UTF-8"
 export LC_CTYPE="en_US.UTF-8"
+
+# for ranger
+export EDITOR="/Users/$USER/Documents/nvim-macos-x86_64/bin/nvim"
+export VISUAL="/Users/$USER/Documents/nvim-macos-x86_64/bin/nvim"
