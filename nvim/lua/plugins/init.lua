@@ -7,6 +7,10 @@ return {
 	},
 	"wellle/targets.vim",
 	"LunarVim/bigfile.nvim",
+	{
+		"davidmh/mdx.nvim",
+		dependencies = { "nvim-treesitter/nvim-treesitter" },
+	},
 	-- "lambdalisue/vim-suda",
 	-- "tpope/vim-fugitive",
 	-- {

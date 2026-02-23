@@ -21,15 +21,15 @@ autocmd("TextYankPost", {
 })
 
 -- Remove whitespace on save
-autocmd("BufWritePre", {
-	pattern = "",
-	command = ":%s/\\s\\+$//e",
-})
+-- autocmd("BufWritePre", {
+-- 	pattern = "",
+-- 	command = ":%s/\\s\\+$//e",
+-- })
 
 -- Don't auto commenting new lines
 autocmd("BufEnter", {
 	pattern = "",
-	command = "set fo-=c fo-=r fo-=o",
+	command = "set fo-=c fo-=o",
 })
 
 -- Open help vertically

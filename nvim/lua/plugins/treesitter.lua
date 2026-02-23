@@ -53,6 +53,8 @@ return {
 					"javascript",
 					"typescript",
 					"yaml",
+					"svelte",
+					"astro",
 				}, {
 					max_jobs = 8,
 				})
