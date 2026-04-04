@@ -1,41 +1,94 @@
 return {
 	"nvim-telescope/telescope.nvim",
-	tag = "v0.2.0",
+	version = "*",
 	dependencies = {
 		"nvim-lua/plenary.nvim",
+		"nvim-tree/nvim-web-devicons",
+		-- {
+		-- 	"nvim-telescope/telescope-fzf-native.nvim",
+		-- 	build = "make",
+		--
+		-- },
 		{
 			"nvim-telescope/telescope-fzf-native.nvim",
 			build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release --target install",
 		},
-		"nvim-tree/nvim-web-devicons",
+		{
+			"nvim-telescope/telescope-live-grep-args.nvim",
+			-- This will not install any breaking changes.
+			-- For major updates, this must be adjusted manually.
+			version = "^1.0.0",
+		},
 	},
 	config = function()
+		local lga_actions = require("telescope-live-grep-args.actions")
+
+		require("telescope").setup({
+			defaults = {
+				path_display = { "filename_first" },
+				file_ignore_patterns = { "node_modules" },
+				color_devicons = true,
+				layout_config = {
+					prompt_position = "top",
+					horizontal = {
+						preview_width = 0.4,
+					},
+				},
+				sorting_strategy = "ascending",
+				mappings = {
+					i = {
+						["<C-k>"] = lga_actions.quote_prompt(),
+						["<C-t>"] = require("telescope.actions.layout").toggle_preview,
+					},
+				},
+			},
+			pickers = {
+				git_files = {
+					theme = "ivy",
+				},
+				find_files = {
+					theme = "ivy",
+				},
+				grep_string = {
+					additional_args = { "--hidden" },
+				},
+				live_grep = {
+					additional_args = { "--hidden" },
+				},
+			},
+			extensions = {
+				fzf = {
+					fuzzy = true,
+					override_generic_sorter = true,
+					override_file_sorter = true,
+					case_mode = "smart_case",
+				},
+			},
+		})
+		local telescope = require("telescope")
+
+		telescope.load_extension("fzf")
+		telescope.load_extension("live_grep_args")
+
 		local builtin = require("telescope.builtin")
-		-- local actions = require("telescope.actions")
-		--
-		-- telescope.setup({
-		-- 	defaults = {
-		-- 		path_display = { "truncate " },
-		-- 		mappings = {
-		-- 			i = {
-		-- 				["<C-k>"] = actions.move_selection_previous, -- move to prev result
-		-- 				["<C-j>"] = actions.move_selection_next, -- move to next result
-		-- 				["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
-		-- 			},
-		-- 		},
-		-- 	},
-		-- })
-		--
-		-- telescope.load_extension("fzf")
-		--
-		-- -- set keymaps
 		local keymap = vim.keymap -- for conciseness
 
-		keymap.set("n", "<C-f>", builtin.find_files, { desc = "Fuzzy find files in cwd" })
+		keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Fuzzy find files in cwd" })
+
+		-- vim.keymap.set("n", "<leader>rg", function()
+		-- 	builtin.grep_string({ search = vim.fn.input("Grep > ") })
+		-- end)
+
 		keymap.set("n", "<leader>a", builtin.live_grep, { desc = "Fuzzy find recent files" })
-		-- keymap.set("n", "<leader>fc", "<cmd>Telescope grep_string<cr>", { desc = "Find string under cursor in cwd" })
-		-- keymap.set("n", "<BS>", "<cmd>Telescope command_history<cr>")
-		-- keymap.set("n", "<leader>aa", "<cmd>Telescope grep_string search=<cr>")
+		keymap.set("n", "<leader>hi", builtin.command_history, { desc = "Command history" })
+		keymap.set("n", "<C-f>", builtin.git_files, { desc = "" })
+		keymap.set("n", "<leader>fr", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>")
+		keymap.set("n", "gR", builtin.lsp_references)
+
+		keymap.set("n", "gd", builtin.lsp_definitions, {})
+		keymap.set("n", "gi", vim.lsp.buf.implementation, {})
+
+		-- keymap.set("n", "<leader>rg", "<cmd>Telescope grep_string search=<cr>")
 		-- keymap.set("n", "<C-b>", "<cmd>Telescope buffers<cr>", {})
 	end,
 }

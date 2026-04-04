@@ -59,7 +59,6 @@ opt.writebackup = false -- if a file is being edited by another program (or was 
 -- vim.opt.shortmess:append 'c' -- don't give |ins-completion-menu| messages
 -- vim.opt.iskeyword:append '-' -- hyphenated words recognized by searches
 -- vim.opt.runtimepath:remove '/usr/share/vim/vimfiles' -- separate vim plugins from neovim in case vim still in use
-
 -----------------------------------------------------------
 -- Disable nvim intro
 opt.shortmess:append("sI")

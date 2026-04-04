@@ -1,2 +1,3 @@
 *.itermcolors
 nvim/lazy-lock.json
+private*

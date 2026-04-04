@@ -3,6 +3,7 @@ return {
 	dependencies = {
 		{
 			"nvim-treesitter/nvim-treesitter-context",
+      enabled = false,
 			opts = {
 				max_lines = 4,
 				multiline_threshold = 2,

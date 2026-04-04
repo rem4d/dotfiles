@@ -1,3 +1,3 @@
 # dotfiles
 
-Always WIP, never done.
+Always WIP

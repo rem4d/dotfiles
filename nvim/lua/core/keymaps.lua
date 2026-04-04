@@ -2,13 +2,6 @@
 -- Define keymaps of Neovim and installed plugins.
 -----------------------------------------------------------
 
-local mulstr = [[
-Multi line
-string
-here
-  atata
-]]
-
 local function map(mode, lhs, rhs, opts)
 	local options = { noremap = true, silent = true }
 	if opts then
@@ -132,28 +125,6 @@ local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
 
 keymap.set({ "n", "v" }, "<leader>cx", vim.lsp.buf.code_action, opts) -- see available code actions, in visual mode will apply to selection
-keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts) -- show definition, references
-keymap.set("n", "gd", vim.lsp.buf.definition, opts) -- go to declaration
-keymap.set("n", "gi", vim.lsp.buf.implementation, opts) -- go to declaration
 keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts) -- smart rename
-
--- 	opts.desc = "Show LSP definitions"
--- 	keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts) -- show lsp definitions
---
--- 	opts.desc = "Show LSP implementations"
--- 	keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts) -- show lsp implementations
---
--- 	opts.desc = "Show LSP type definitions"
--- 	keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts) -- show lsp type definitions
---
--- 	opts.desc = "Show buffer diagnostics"
--- 	keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
---
 keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts) -- show diagnostics for line
-keymap.set("n", "[d", vim.diagnostic.goto_prev, opts) -- jump to previous diagnostic in buffer
-keymap.set("n", "]d", vim.diagnostic.goto_next, opts) -- jump to next diagnostic in buffer
-keymap.set("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
 keymap.set("n", "ss", "<cmd>SupermavenToggle<CR>", opts)
-
-keymap.set("n", "<leader>d", "<cmd>lua vim.diagnostic.enable(false)<cr>", opts)
-keymap.set("n", "<leader>e", "<cmd>lua vim.diagnostic.enable()<cr>", opts)

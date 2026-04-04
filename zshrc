@@ -49,6 +49,7 @@ alias nvim='/Users/$USER/Documents/nvim-macos-x86_64/bin/nvim'
 alias postgrestools='~/Documents/postgrestools/postgrestools_x86_64-apple-darwin'
 alias python='python3'
 alias pip='pip3'
+alias frepo='python3 /usr/local/bin/git-filter-repo'
 
 #fzf
 # Set up fzf key bindings and fuzzy completion
@@ -75,3 +76,13 @@ export LC_CTYPE="en_US.UTF-8"
 # for ranger
 export EDITOR="/Users/$USER/Documents/nvim-macos-x86_64/bin/nvim"
 export VISUAL="/Users/$USER/Documents/nvim-macos-x86_64/bin/nvim"
+
+# make
+export PATH="/usr/local/opt/make/libexec/gnubin:$PATH"
+
+
+alias gcc="gcc-14"
+alias g++="g++-14"
+alias make="gmake"
+
+source "./private.sh"

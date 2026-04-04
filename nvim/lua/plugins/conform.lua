@@ -9,6 +9,7 @@ return {
 			javascriptreact = { "prettierd", "eslint_d" },
 			typescriptreact = { "prettierd", "eslint_d" },
 			css = { "prettier" },
+			scss = { "prettier" },
 			html = { "prettierd" },
 			svg = { "prettier" },
 			json = { "prettier" },

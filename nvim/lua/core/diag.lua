@@ -1,9 +1,3 @@
-vim.lsp.enable({
-	"vtsls",
-	"lua_ls",
-	"tailwindcss",
-})
-
 vim.diagnostic.config({
 	-- virtual_lines = true,
 	virtual_text = true,
@@ -21,3 +15,7 @@ vim.diagnostic.config({
 	},
 	severity_sort = true,
 })
+
+local opts = { noremap = true, silent = true }
+vim.keymap.set("n", "<leader>d", "<cmd>lua vim.diagnostic.enable(false)<cr>", opts)
+vim.keymap.set("n", "<leader>e", "<cmd>lua vim.diagnostic.enable()<cr>", opts)
