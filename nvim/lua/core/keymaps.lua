@@ -126,5 +126,4 @@ local opts = { noremap = true, silent = true }
 
 keymap.set({ "n", "v" }, "<leader>cx", vim.lsp.buf.code_action, opts) -- see available code actions, in visual mode will apply to selection
 keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts) -- smart rename
-keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts) -- show diagnostics for line
 keymap.set("n", "ss", "<cmd>SupermavenToggle<CR>", opts)

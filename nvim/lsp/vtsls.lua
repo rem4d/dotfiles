@@ -79,6 +79,24 @@ return {
 		"typescript",
 		"typescriptreact",
 	},
+	settings = {
+		vtsls = {
+			enable = true,
+			exclude = { "node_modules", "dist", "build" },
+			tsserver = {
+				maxTsServerMemory = 4096,
+				enableMoveToFileCodeAction = false,
+				globalPlugins = {
+					{
+						location = "/Users/rem/Library/pnpm/global/5/node_modules/typescript-plugin-css-modules",
+						name = "typescript-plugin-css-modules",
+						-- location = "/Users/rem/Library/pnpm/global/5/node_modules/@css-modules-kit/ts-plugin",
+						-- name = "@css-modules-kit/ts-plugin",
+					},
+				},
+			},
+		},
+	},
 	root_dir = function(bufnr, on_dir)
 		-- The project root is where the LSP can be started from
 		-- As stated in the documentation above, this LSP supports monorepos and simple projects.

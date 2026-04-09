@@ -31,7 +31,7 @@ return {
 				layout_config = {
 					prompt_position = "top",
 					horizontal = {
-						preview_width = 0.4,
+						preview_width = 0.5,
 					},
 				},
 				sorting_strategy = "ascending",
@@ -83,11 +83,23 @@ return {
 		keymap.set("n", "<leader>hi", builtin.command_history, { desc = "Command history" })
 		keymap.set("n", "<C-f>", builtin.git_files, { desc = "" })
 		keymap.set("n", "<leader>fr", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>")
-		keymap.set("n", "gR", builtin.lsp_references)
+		keymap.set("n", "gR", function()
+			builtin.lsp_references({
+				layout_strategy = "horizontal",
+				layout_config = {
+					prompt_position = "top",
+					horizontal = {
+						preview_width = 0.5,
+					},
+				},
+			})
+		end)
 
 		keymap.set("n", "gd", builtin.lsp_definitions, {})
 		keymap.set("n", "gi", vim.lsp.buf.implementation, {})
 
+		-- Add to init.lua
+		vim.keymap.set("v", "<leader>gr", builtin.git_bcommits_range, { desc = "Git bcommits range" })
 		-- keymap.set("n", "<leader>rg", "<cmd>Telescope grep_string search=<cr>")
 		-- keymap.set("n", "<C-b>", "<cmd>Telescope buffers<cr>", {})
 	end,

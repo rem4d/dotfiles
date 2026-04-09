@@ -41,6 +41,7 @@ return {
 	},
 	{
 		"esmuellert/nvim-eslint",
+		enabled = false,
 		config = function()
 			require("nvim-eslint").setup({})
 		end,

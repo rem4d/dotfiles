@@ -86,3 +86,23 @@ alias g++="g++-14"
 alias make="gmake"
 
 source "./private.sh"
+
+# kitty
+
+export PATH="/Applications/kitty.app/Contents/MacOS:$PATH"
+
+# kitty cursor
+# echo -ne "\e[2 q"
+
+# lazygit config
+export XDG_CONFIG_HOME="$HOME/.config"
+
+# difftastic aliases
+# `git log` with patches shown with difftastic.
+alias dlog="git -c diff.external=difft log --ext-diff"
+
+# Show the most recent commit with difftastic.
+alias dshow="git -c diff.external=difft show --ext-diff"
+
+# `git diff` with difftastic.
+alias dgd="git -c diff.external=difft diff"

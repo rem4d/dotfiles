@@ -14,7 +14,37 @@ return {
 	-- "lambdalisue/vim-suda",
 	-- "tpope/vim-fugitive",
 	-- {
-	-- 	"nvim-telescope/telescope-fzf-native.nvim",
-	-- 	build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release",
+	-- 	"j-hui/fidget.nvim",
+	-- 	opts = { },
 	-- },
+	-- jumb between opening/closing tags
+	{
+		"andymass/vim-matchup",
+		event = "BufReadPost",
+	},
+	{
+		"romus204/tree-sitter-manager.nvim",
+		enabled = false,
+		dependencies = {}, -- tree-sitter CLI must be installed system-wide
+		config = function()
+			require("tree-sitter-manager").setup({
+				ensure_installed = {
+					"css",
+					"dockerfile",
+					"jsdoc",
+					"json",
+					"markdown",
+					"markdown_inline",
+					"python",
+					-- "tsx",
+					-- "javascript",
+					"typescript",
+					"yaml",
+				},
+				-- Optional: custom paths
+				-- parser_dir = vim.fn.stdpath("data") .. "/site/parser",
+				-- query_dir = vim.fn.stdpath("data") .. "/site/queries",
+			})
+		end,
+	},
 }

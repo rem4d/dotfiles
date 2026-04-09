@@ -35,33 +35,10 @@ opt.cursorline = false -- highlight the current line
 opt.jumpoptions:remove("clean") -- open previously closed buffer with CTRL-O
 opt.writebackup = false -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
 
--- https://github.com/hendrikmi/dotfiles/blob/main/nvim/lua/core/options.lua
-
--- vim.o.hlsearch = false -- Set highlight on search
--- vim.wo.signcolumn = 'yes' -- Keep signcolumn on by default
--- vim.o.timeoutlen = 300 -- time to wait for a mapped sequence to complete (in milliseconds)
--- vim.o.backup = false -- creates a backup file
--- vim.o.writebackup = false -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
--- vim.o.whichwrap = 'bs<>[]hl' -- which "horizontal" keys are allowed to travel to prev/next line
--- vim.o.wrap = false -- display lines as one long line
--- vim.o.scrolloff = 4 -- minimal number of screen lines to keep above and below the cursor
--- vim.o.sidescrolloff = 8 -- minimal number of screen columns either side of cursor if wrap is `false`
--- vim.o.numberwidth = 4 -- set number column width to 2 {default 4}
--- vim.o.shiftwidth = 4 -- the number of spaces inserted for each indentation
--- vim.o.tabstop = 4 -- insert n spaces for a tab
--- vim.o.softtabstop = 4 -- Number of spaces that a tab counts for while performing editing operations
--- vim.o.showmode = false -- we don't need to see things like -- INSERT -- anymore
--- vim.o.backspace = 'indent,eol,start' -- allow backspace on
--- vim.o.pumheight = 10 -- pop up menu height
--- vim.o.conceallevel = 0 -- so that `` is visible in markdown files
--- vim.o.fileencoding = 'utf-8' -- the encoding written to a file
--- vim.o.cmdheight = 1 -- more space in the neovim command line for displaying messages
--- vim.opt.shortmess:append 'c' -- don't give |ins-completion-menu| messages
--- vim.opt.iskeyword:append '-' -- hyphenated words recognized by searches
--- vim.opt.runtimepath:remove '/usr/share/vim/vimfiles' -- separate vim plugins from neovim in case vim still in use
------------------------------------------------------------
 -- Disable nvim intro
 opt.shortmess:append("sI")
+
+-- opt.autocomplete = true
 
 -- Disable builtin plugins
 local disabled_built_ins = {

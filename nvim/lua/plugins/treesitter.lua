@@ -1,9 +1,10 @@
 return {
+	enabled = true,
 	"nvim-treesitter/nvim-treesitter",
 	dependencies = {
 		{
 			"nvim-treesitter/nvim-treesitter-context",
-      enabled = false,
+			enabled = false,
 			opts = {
 				max_lines = 4,
 				multiline_threshold = 2,
@@ -11,7 +12,7 @@ return {
 		},
 	},
 	lazy = false,
-	branch = "main",
+	-- branch = "main",
 	build = ":TSUpdate",
 	config = function()
 		local ts = require("nvim-treesitter")
