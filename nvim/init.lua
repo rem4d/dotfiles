@@ -1,5 +1,3 @@
-require("core.autocmds")
-require("core.keymaps")
-require("core.options")
-require("core.diag")
-require("config.lazy")
+require("rem.core.options")
+require("rem.core.autocmds")
+require("rem")

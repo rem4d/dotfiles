@@ -127,3 +127,17 @@ local opts = { noremap = true, silent = true }
 keymap.set({ "n", "v" }, "<leader>cx", vim.lsp.buf.code_action, opts) -- see available code actions, in visual mode will apply to selection
 keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts) -- smart rename
 keymap.set("n", "ss", "<cmd>SupermavenToggle<CR>", opts)
+
+-- :restart
+vim.keymap.set("n", "<leader>R", function()
+	local session = vim.fn.stdpath("state") .. "/restart_session.vim"
+	vim.cmd("mksession! " .. vim.fn.fnameescape(session))
+	vim.cmd("restart source " .. vim.fn.fnameescape(session))
+end, { desc = "Restart Neovim" })
+
+-- diagnostics
+
+local opts = { noremap = true, silent = true }
+-- vim.keymap.set("n", "<leader>d", "<cmd>lua vim.diagnostic.enable(false)<cr>", opts)
+-- vim.keymap.set("n", "<leader>e", "<cmd>lua vim.diagnostic.enable()<cr>", opts)
+vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts) -- show diagnostics for line

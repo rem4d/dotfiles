@@ -18,11 +18,6 @@ opt.splitright = true -- force all vertical splits to go to the right of current
 opt.smartcase = true
 opt.termguicolors = true -- Enable 24-bit RGB colors
 opt.laststatus = 3 -- Set global statusline
-opt.expandtab = true -- Use spaces instead of tabs
-opt.shiftwidth = 2 -- Shift 2 spaces when tab
-opt.tabstop = 2 -- 1 tab == 2 spaces
--- opt.smartindent = true -- Autoindent new lines
-opt.autoindent = true -- copy indent from current line when starting new one
 opt.hidden = true -- Enable background buffers
 opt.history = 1000 -- Remember N lines in history
 -- opt.lazyredraw = true -- Faster scrolling
@@ -38,7 +33,20 @@ opt.writebackup = false -- if a file is being edited by another program (or was 
 -- Disable nvim intro
 opt.shortmess:append("sI")
 
--- opt.autocomplete = true
+-- Tab options
+opt.shiftwidth = 4 -- Shift 4 spaces when tab
+opt.tabstop = 4 -- 1 tab == 4 spaces
+opt.expandtab = true -- Use spaces instead of tabs
+-- End tab options
+
+-- Auto indent
+opt.autoindent = true -- New lines inherit indentation from the previous line
+opt.smartindent = false -- can conflict with Treesitter
+opt.cindent = false -- can conflict with Treesitter
+-- End Auto indent
+
+vim.o.cmdheight = 1
+vim.o.winborder = "rounded"
 
 -- Disable builtin plugins
 local disabled_built_ins = {
