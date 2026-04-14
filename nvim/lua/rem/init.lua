@@ -36,6 +36,8 @@ vim.pack.add({
 		src = "https://github.com/saghen/blink.cmp",
 		version = "v1.10.2",
 	},
+	-- "https://github.com/mfussenegger/nvim-lint",
+	"https://github.com/esmuellert/nvim-eslint",
 })
 
 vim.cmd.colorscheme("sonokai")

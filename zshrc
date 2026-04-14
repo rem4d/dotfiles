@@ -86,9 +86,6 @@ source "./private.sh"
 
 export PATH="/Applications/kitty.app/Contents/MacOS:$PATH"
 
-# kitty cursor
-# echo -ne "\e[2 q"
-
 # lazygit config
 export XDG_CONFIG_HOME="$HOME/.config"
 

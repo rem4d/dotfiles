@@ -103,9 +103,10 @@ map("x", "<C-p>", ':set paste<cr>"*]p:set nopaste<cr>')
 -- nnoremap <silent> s :set opfunc=PasteReplace<CR>g@
 -- vnoremap <silent> s :<C-U>call PasteReplace(visualmode(), 1)<CR>
 map("v", "s", ":<C-U>call PasteReplace(visualmode(),1)<cr>")
+map("v", "s", ":<C-U>call PasteReplace(visualmode(),1)<cr>")
 
--- Reload configuration without restart nvim
-map("n", "<leader><leader>r", ":so %<cr>")
+-- Copy current file path
+map("n", "<leader>cp", ':let @+ = expand("%")<cr>')
 -----------------------------------------------------------
 -- Applications and Plugins shortcuts
 -----------------------------------------------------------

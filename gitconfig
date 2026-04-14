@@ -1,9 +1,16 @@
-[user]
-	email = bleazint@gmail.com
-	name = Rem
 [core]
-	editor = vim
-[merge "ours"]
-	driver = true
-[init]
-	defaultBranch = main
+    pager = delta
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    features = collared-trogon
+    navigate = true  # use n and N to move between diff sections
+    dark = true      # or light = true, or omit for auto-detection
+
+[merge]
+    conflictStyle = zdiff3
+
+[include]
+    path = ~/projects/dotfiles/delta-themes.gitconfig

@@ -22,7 +22,7 @@ mason_lspconfig.setup({
 		"tailwindcss",
 		"lua_ls",
 		"graphql",
-		"basedpyright",
+		-- "basedpyright",
 		"somesass_ls",
 	},
 	automatic_installation = true,
