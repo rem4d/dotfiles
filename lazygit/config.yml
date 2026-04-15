@@ -1,0 +1,12 @@
+git:
+  # pagers:
+  #   - externalDiffCommand: difft --color=always
+  pagers:
+    - pager: delta --dark --paging=never
+
+keybinding:
+  universal:
+    nextPage: <c-d>
+    prevPage: <c-u>
+    gotoTop: g
+    gotoBottom: G
