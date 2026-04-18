@@ -25,7 +25,7 @@ vim.pack.add({
 	},
 	"https://github.com/nvim-telescope/telescope-live-grep-args.nvim",
 	"https://github.com/lewis6991/gitsigns.nvim",
-	"https://github.com/f-person/git-blame.nvim",
+	-- "https://github.com/f-person/git-blame.nvim",
 
 	"https://github.com/stevearc/conform.nvim",
 	"https://github.com/windwp/nvim-autopairs",
@@ -38,6 +38,11 @@ vim.pack.add({
 	},
 	-- "https://github.com/mfussenegger/nvim-lint",
 	"https://github.com/esmuellert/nvim-eslint",
+	"https://github.com/tpope/vim-fugitive",
+
+	-- "https://github.com/supermaven-inc/supermaven-nvim",
+	"https://github.com/rafamadriz/friendly-snippets",
+	"https://github.com/L3MON4D3/LuaSnip",
 })
 
 vim.cmd.colorscheme("sonokai")
@@ -138,7 +143,7 @@ require("blink.cmp").setup({
 			"lsp",
 			"path",
 			"buffer",
-			-- , "snippets", "buffer"
+			"snippets",
 		},
 	},
 	fuzzy = { implementation = "prefer_rust_with_warning" },
@@ -208,3 +213,16 @@ require("vim._core.ui2").enable({
 		},
 	},
 })
+
+-- require("supermaven-nvim").enable({
+-- 	keymaps = {
+-- 		accept_suggestion = "<Tab>",
+-- 		clear_suggestion = "<C-[>",
+-- 		accept_word = "<C-]>",
+-- 	},
+-- 	disable_keymaps = false,
+-- 	disable_inline_completion = false,
+-- 	ignore_filetypes = { "bigfile", "snacks_input", "snacks_notif" },
+-- })
+
+require("luasnip.loaders.from_vscode").lazy_load()
