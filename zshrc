@@ -104,3 +104,4 @@ alias lvim='NVIM_APPNAME=nvim2 nvim'
 
 # Example: Use Cyan for suggestions
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#7f838e"
+export EDITOR=nvim

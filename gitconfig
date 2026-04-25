@@ -7,7 +7,9 @@
     diffFilter = delta --color-only
 
 [delta]
-    features = collared-trogon 
+    ; features = collared-trogon 
+    ; features = mantis-shrimp
+    features = chameleon
     navigate = true  # use n and N to move between diff sections
     dark = true      # or light = true, or omit for auto-detection
 

@@ -105,11 +105,15 @@ map("x", "<C-p>", ':set paste<cr>"*]p:set nopaste<cr>')
 map("v", "s", ":<C-U>call PasteReplace(visualmode(),1)<cr>")
 map("v", "s", ":<C-U>call PasteReplace(visualmode(),1)<cr>")
 
--- Copy current file path
-map("n", "<leader>cp", ':let @+ = expand("%")<cr>')
------------------------------------------------------------
--- Applications and Plugins shortcuts
------------------------------------------------------------
+-- Copy current file path with line number
+-- map("n", "<leader>cp", ':let @+ = expand("%")<cr>')
+vim.keymap.set("n", "<leader>cp", function()
+	local path = vim.fn.expand("%")
+	local line = vim.fn.line(".")
+	local result = path .. ":" .. line
+	vim.fn.setreg("+", result)
+	print("Copied: ", result)
+end, { desc = "Copy file path" })
 
 -- Tmux navigator
 if vim.fn.executable("tmux") == 1 then

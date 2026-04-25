@@ -1,0 +1,69 @@
+# If you come from bash you might have to change your $PATH.
+export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
+export PATH=$HOME/.cargo/bin:$PATH
+
+# Path to your Oh My Zsh installation.
+export ZSH="$HOME/.oh-my-zsh"
+
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time Oh My Zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+ZSH_THEME="robbyrussell"
+
+plugins=(git)
+
+source $ZSH/oh-my-zsh.sh
+
+# pnpm
+export PNPM_HOME=$HOME/.local/share/pnpm
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+# zplug, fzf has to be installed
+
+source ~/.zplug/init.zsh
+
+# zplug "plugins/git", from:oh-my-zsh
+zplug "plugins/history", from:oh-my-zsh
+
+zplug "zsh-users/zsh-autosuggestions"
+zplug "zsh-users/zsh-syntax-highlighting"
+zplug "zsh-users/zsh-completions", defer:2
+zplug "agkozak/zsh-z"
+# zplug "jeffreytse/zsh-vi-mode"
+
+
+# zplug install
+zplug load
+
+
+# Example aliases
+alias cl="clear"
+
+# increase the memory limit for the node process.
+export NODE_OPTIONS=“--max-old-space-size=16384”
+
+# lazygit config
+export XDG_CONFIG_HOME="$HOME/.config"
+
+# Example: Use Cyan for suggestions
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#7f838e"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+#fzf
+# Set up fzf key bindings and fuzzy completion
+source <(fzf --zsh)
+
+
+export NVM_DIR="$HOME/.config/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export EDITOR=nvim
+
+alias jsontidy="xclip -selection clipboard -o | jq '.' | xclip -selection clipboard"
