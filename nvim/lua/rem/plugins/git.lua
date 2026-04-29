@@ -30,6 +30,7 @@ require("gitsigns").setup({
 		end, { expr = true })
 
 		map("n", "<leader>hi", gs.preview_hunk_inline)
+		map("n", "<leader>hp", gs.preview_hunk)
 
 		-- 	-- Actions
 		-- map("n", "<leader>hs", gs.stage_hunk)
@@ -38,3 +39,19 @@ require("gitsigns").setup({
 		-- map("n", "<leader>hp", gs.preview_hunk)
 	end,
 })
+
+-- Diffview
+vim.opt.fillchars:append("diff:╱")
+
+vim.api.nvim_set_hl(0, "DiffAdd", { bg = "#20303b", fg = "none" })
+vim.api.nvim_set_hl(0, "DiffDelete", { bg = "#37222c" })
+vim.api.nvim_set_hl(0, "DiffChange", { bg = "#1f2231", fg = "none" })
+vim.api.nvim_set_hl(0, "DiffText", { bg = "#394b70", fg = "none" })
+
+vim.api.nvim_set_hl(0, "DiffDelete", {
+	fg = "#997c7c", -- color of the ╱ symbol
+	-- bg = "#1e1e1e", -- background if you want
+})
+
+vim.keymap.set("n", "<leader>gdd", ":DiffviewOpen<cr>")
+vim.keymap.set("n", "<leader>gdm", ":DiffviewOpen master..HEAD %<cr>")

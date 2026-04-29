@@ -4,6 +4,7 @@ require("rem.core.keymaps")
 
 vim.pack.add({
 	"https://github.com/sainnhe/sonokai",
+	"https://github.com/folke/tokyonight.nvim",
 	"https://github.com/christoomey/vim-tmux-navigator",
 	"https://github.com/tpope/vim-surround",
 	"https://github.com/andymass/vim-matchup",
@@ -24,8 +25,6 @@ vim.pack.add({
 		build = "make",
 	},
 	"https://github.com/nvim-telescope/telescope-live-grep-args.nvim",
-	"https://github.com/lewis6991/gitsigns.nvim",
-	-- "https://github.com/f-person/git-blame.nvim",
 
 	"https://github.com/stevearc/conform.nvim",
 	"https://github.com/windwp/nvim-autopairs",
@@ -38,14 +37,21 @@ vim.pack.add({
 	},
 	-- "https://github.com/mfussenegger/nvim-lint",
 	"https://github.com/esmuellert/nvim-eslint",
-	"https://github.com/tpope/vim-fugitive",
 
 	-- "https://github.com/supermaven-inc/supermaven-nvim",
 	"https://github.com/rafamadriz/friendly-snippets",
 	"https://github.com/L3MON4D3/LuaSnip",
+
+	-- git plugins
+	"https://github.com/tpope/vim-fugitive",
+	"https://github.com/lewis6991/gitsigns.nvim",
+	-- "https://github.com/f-person/git-blame.nvim",
+	"https://github.com/sindrets/diffview.nvim",
+	"https://github.com/neogitorg/neogit",
 })
 
-vim.cmd.colorscheme("sonokai")
+-- vim.cmd.colorscheme("sonokai")
+vim.cmd([[colorscheme tokyonight]])
 
 require("rem.plugins.telescope")
 require("rem.plugins.treesitter")
