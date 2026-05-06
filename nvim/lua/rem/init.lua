@@ -45,7 +45,7 @@ vim.pack.add({
 	-- git plugins
 	"https://github.com/tpope/vim-fugitive",
 	"https://github.com/lewis6991/gitsigns.nvim",
-	-- "https://github.com/f-person/git-blame.nvim",
+	"https://github.com/f-person/git-blame.nvim",
 	"https://github.com/sindrets/diffview.nvim",
 	"https://github.com/neogitorg/neogit",
 })
@@ -58,6 +58,7 @@ require("rem.plugins.treesitter")
 require("rem.plugins.nvim-tree")
 require("rem.plugins.git")
 require("rem.plugins.mason")
+require("rem.plugins.markdown")
 
 require("bufferline").setup({
 	options = {
