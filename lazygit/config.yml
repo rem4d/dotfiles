@@ -10,3 +10,12 @@ keybinding:
     prevPage: <c-u>
     gotoTop: g
     gotoBottom: G
+
+gui:
+  theme:
+    # Background color for the currently selected hunk/range
+    selectedRangeBgColor:
+      - blue
+    # Background color for the currently selected single line
+    selectedLineBgColor:
+      - "#36283b"
