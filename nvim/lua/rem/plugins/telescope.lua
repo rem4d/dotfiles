@@ -82,3 +82,6 @@ keymap.set("n", "gi", vim.lsp.buf.implementation, {})
 vim.keymap.set("v", "<leader>gr", builtin.git_bcommits_range, { desc = "Git bcommits range" })
 -- keymap.set("n", "<leader>rg", "<cmd>Telescope grep_string search=<cr>")
 -- keymap.set("n", "<C-b>", "<cmd>Telescope buffers<cr>", {})
+
+keymap.set("n", "<BS>", builtin.command_history, {})
+keymap.set("n", "<leader>t", builtin.resume, {})
