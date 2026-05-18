@@ -45,7 +45,7 @@ vim.pack.add({
 	-- git plugins
 	"https://github.com/tpope/vim-fugitive",
 	"https://github.com/lewis6991/gitsigns.nvim",
-	"https://github.com/f-person/git-blame.nvim",
+	-- "https://github.com/f-person/git-blame.nvim",
 	"https://github.com/sindrets/diffview.nvim",
 	"https://github.com/neogitorg/neogit",
 })
@@ -98,10 +98,10 @@ require("lualine").setup({
 
 require("conform").setup({
 	formatters_by_ft = {
-		javascript = { "prettierd", "eslint_d" },
-		typescript = { "prettierd", "eslint_d" },
-		javascriptreact = { "prettierd", "eslint_d" },
-		typescriptreact = { "prettierd", "eslint_d" },
+		javascript = { "oxfmt", "eslint_d" },
+		typescript = { "oxfmt", "eslint_d" },
+		javascriptreact = { "oxfmt", "eslint_d" },
+		typescriptreact = { "oxfmt", "eslint_d" },
 		css = { "prettier" },
 		scss = { "prettier" },
 		html = { "prettierd" },
