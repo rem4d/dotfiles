@@ -55,3 +55,12 @@ vim.api.nvim_set_hl(0, "DiffDelete", {
 
 vim.keymap.set("n", "<leader>gdd", ":DiffviewOpen<cr>")
 vim.keymap.set("n", "<leader>gdm", ":DiffviewOpen master..HEAD %<cr>")
+
+require("neogit").setup({
+	treesitter_diff_highlight = true,
+	word_diff_highlight = true,
+})
+
+require("gitblame").setup({
+	enabled = true,
+})

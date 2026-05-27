@@ -45,9 +45,10 @@ vim.pack.add({
 	-- git plugins
 	"https://github.com/tpope/vim-fugitive",
 	"https://github.com/lewis6991/gitsigns.nvim",
-	-- "https://github.com/f-person/git-blame.nvim",
+	"https://github.com/f-person/git-blame.nvim",
 	"https://github.com/sindrets/diffview.nvim",
 	"https://github.com/neogitorg/neogit",
+	"https://github.com/isakbm/gitgraph.nvim",
 })
 
 -- vim.cmd.colorscheme("sonokai")
@@ -57,6 +58,7 @@ require("rem.plugins.telescope")
 require("rem.plugins.treesitter")
 require("rem.plugins.nvim-tree")
 require("rem.plugins.git")
+require("rem.plugins.blink")
 require("rem.plugins.mason")
 require("rem.plugins.markdown")
 
@@ -129,31 +131,6 @@ require("nvim-autopairs").setup({
 		javascript = { "template_string" }, -- don't add pairs in javscript template_string treesitter nodes
 		java = false, -- don't check treesitter on java
 	},
-})
-
-require("blink.cmp").setup({
-	keymap = {
-		preset = "default",
-	},
-
-	appearance = {
-		nerd_font_variant = "mono",
-	},
-
-	completion = {
-		documentation = { auto_show = false },
-		trigger = { prefetch_on_insert = false },
-	},
-
-	sources = {
-		default = {
-			"lsp",
-			"path",
-			"buffer",
-			"snippets",
-		},
-	},
-	fuzzy = { implementation = "prefer_rust_with_warning" },
 })
 
 vim.diagnostic.config({
@@ -233,3 +210,4 @@ require("vim._core.ui2").enable({
 -- })
 
 require("luasnip.loaders.from_vscode").lazy_load()
+require("nvim-ts-autotag").setup({})

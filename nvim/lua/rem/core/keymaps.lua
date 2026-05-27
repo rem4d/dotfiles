@@ -148,3 +148,4 @@ local opts = { noremap = true, silent = true }
 vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts) -- show diagnostics for line
 
 vim.keymap.set("n", "<leader>ca", "<cmd>%bd|e#|bd#<cr>", { desc = "Close all buffers except current" })
+vim.keymap.set("n", "gdd", vim.lsp.buf.definition)
