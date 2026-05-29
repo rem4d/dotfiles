@@ -46,5 +46,3 @@ require("nvim-tree").setup({
 local keymap = vim.keymap -- for conciseness
 
 keymap.set("n", "<C-n>", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle file explorer" }) -- toggle file explorer
-keymap.set("n", "<leader>r", "<cmd>NvimTreeFindFileToggle<CR>", { desc = "Toggle file explorer on current file" }) -- toggle file explorer on current file
-keymap.set("n", "<leader>r", ":NvimTreeFindFile<CR>") -- search file

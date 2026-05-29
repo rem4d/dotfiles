@@ -38,7 +38,6 @@ vim.pack.add({
 	-- "https://github.com/mfussenegger/nvim-lint",
 	"https://github.com/esmuellert/nvim-eslint",
 
-	-- "https://github.com/supermaven-inc/supermaven-nvim",
 	"https://github.com/rafamadriz/friendly-snippets",
 	"https://github.com/L3MON4D3/LuaSnip",
 
@@ -54,6 +53,8 @@ vim.pack.add({
 	"https://github.com/wellle/targets.vim",
 
 	"https://github.com/acksld/nvim-neoclip.lua",
+	"https://github.com/nvim-mini/mini.files",
+	"https://github.com/stevearc/oil.nvim",
 })
 
 vim.pack.add({ "https://github.com/nvim-mini/mini.ai" })
@@ -206,17 +207,6 @@ require("vim._core.ui2").enable({
 	},
 })
 
--- require("supermaven-nvim").enable({
--- 	keymaps = {
--- 		accept_suggestion = "<Tab>",
--- 		clear_suggestion = "<C-[>",
--- 		accept_word = "<C-]>",
--- 	},
--- 	disable_keymaps = false,
--- 	disable_inline_completion = false,
--- 	ignore_filetypes = { "bigfile", "snacks_input", "snacks_notif" },
--- })
-
 require("luasnip.loaders.from_vscode").lazy_load()
 require("nvim-ts-autotag").setup({})
 -- require("mini.bracketed").setup({})
@@ -246,3 +236,5 @@ require("neoclip").setup({
 		},
 	},
 })
+require("mini.files").setup()
+require("oil").setup()

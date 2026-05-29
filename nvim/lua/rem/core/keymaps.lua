@@ -149,3 +149,7 @@ vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts) -- show diagno
 
 vim.keymap.set("n", "<leader>ca", "<cmd>%bd|e#|bd#<cr>", { desc = "Close all buffers except current" })
 vim.keymap.set("n", "gdd", vim.lsp.buf.definition)
+
+keymap.set("n", "<leader>r", function()
+	require("mini.files").open(vim.api.nvim_buf_get_name(0), false)
+end, { desc = "Reveal current file" })
