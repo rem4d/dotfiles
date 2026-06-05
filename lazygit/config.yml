@@ -10,6 +10,8 @@ keybinding:
     prevPage: <c-u>
     gotoTop: g
     gotoBottom: G
+  commits:
+    viewResetOptions: x
 
 gui:
   theme:

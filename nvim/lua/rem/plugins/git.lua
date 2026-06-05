@@ -41,16 +41,16 @@ require("gitsigns").setup({
 })
 
 -- Diffview
--- vim.opt.fillchars:append("diff:╱")
+vim.opt.fillchars:append("diff:╱")
 
 vim.api.nvim_set_hl(0, "DiffAdd", { bg = "#20303b", fg = "none" })
--- vim.api.nvim_set_hl(0, "DiffDelete", { bg = "#37222c" })
+vim.api.nvim_set_hl(0, "DiffDelete", { bg = "#37222c" })
 vim.api.nvim_set_hl(0, "DiffChange", { bg = "#1f2231", fg = "none" })
 vim.api.nvim_set_hl(0, "DiffText", { bg = "#394b70", fg = "none" })
 
 vim.api.nvim_set_hl(0, "DiffDelete", {
-	fg = "#37222c", -- color of the ╱ symbol
-	bg = "#37222c", -- background if you want
+	fg = "#333333", -- color of the ╱ symbol
+	-- bg = "#37222c", -- background if you want
 })
 
 vim.keymap.set("n", "<leader>gdd", ":DiffviewOpen<cr>")
