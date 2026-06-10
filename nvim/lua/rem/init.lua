@@ -48,6 +48,7 @@ vim.pack.add({
 	"https://github.com/sindrets/diffview.nvim",
 	"https://github.com/neogitorg/neogit",
 	"https://github.com/isakbm/gitgraph.nvim",
+	"https://github.com/rbong/vim-flog",
 
 	-- text objects
 	"https://github.com/wellle/targets.vim",

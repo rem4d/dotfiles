@@ -44,9 +44,9 @@ require("gitsigns").setup({
 vim.opt.fillchars:append("diff:╱")
 
 vim.api.nvim_set_hl(0, "DiffAdd", { bg = "#20303b", fg = "none" })
-vim.api.nvim_set_hl(0, "DiffDelete", { bg = "#37222c" })
-vim.api.nvim_set_hl(0, "DiffChange", { bg = "#1f2231", fg = "none" })
-vim.api.nvim_set_hl(0, "DiffText", { bg = "#394b70", fg = "none" })
+vim.api.nvim_set_hl(0, "DiffDelete", { bg = "#362225" })
+vim.api.nvim_set_hl(0, "DiffChange", { bg = "#40252c", fg = "none" })
+vim.api.nvim_set_hl(0, "DiffText", { bg = "#6b2020", fg = "none" })
 
 vim.api.nvim_set_hl(0, "DiffDelete", {
 	fg = "#333333", -- color of the ╱ symbol
@@ -63,4 +63,13 @@ require("neogit").setup({
 
 require("gitblame").setup({
 	enabled = true,
+})
+
+vim.keymap.set("n", "dfo", ":DiffviewOpen origin/main...HEAD --imply-local<cr>")
+vim.keymap.set("n", "dfc", ":DiffviewClose<cr>")
+
+vim.api.nvim_set_hl(0, "Folded", {
+	fg = "#414e63",
+	bg = "#131a26",
+	italic = true,
 })

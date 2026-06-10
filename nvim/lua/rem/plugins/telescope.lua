@@ -21,16 +21,16 @@ require("telescope").setup({
 				["<C-t>"] = require("telescope.actions.layout").toggle_preview,
 			},
 		},
-		vimgrep_arguments = {
-			"rg",
-			"--color=never",
-			"--no-heading",
-			"--with-filename",
-			"--line-number",
-			"--column",
-			"--smart-case",
-			"--fixed-strings",
-		},
+		-- vimgrep_arguments = {
+		-- 	"rg",
+		-- 	"--color=never",
+		-- 	"--no-heading",
+		-- 	"--with-filename",
+		-- 	"--line-number",
+		-- 	"--column",
+		-- 	"--smart-case",
+		-- 	"--fixed-strings",
+		-- },
 	},
 	pickers = {
 		git_files = {
