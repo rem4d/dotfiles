@@ -5,6 +5,7 @@ require("rem.core.keymaps")
 vim.pack.add({
 	"https://github.com/sainnhe/sonokai",
 	"https://github.com/folke/tokyonight.nvim",
+	"https://github.com/alexvzyl/nordic.nvim",
 	"https://github.com/christoomey/vim-tmux-navigator",
 	"https://github.com/tpope/vim-surround",
 	"https://github.com/andymass/vim-matchup",
@@ -61,8 +62,8 @@ vim.pack.add({
 vim.pack.add({ "https://github.com/nvim-mini/mini.ai" })
 vim.pack.add({ "https://github.com/nvim-mini/mini.bracketed" })
 
--- vim.cmd.colorscheme("sonokai")
-vim.cmd([[colorscheme tokyonight]])
+-- vim.cmd([[colorscheme tokyonight]])
+vim.cmd([[colorscheme nordic]])
 
 require("rem.plugins.telescope")
 require("rem.plugins.treesitter")

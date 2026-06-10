@@ -81,6 +81,10 @@
       "rev": "792c139da736230855e8341ebe6175bb6eb8268b",
       "src": "https://github.com/neogitorg/neogit"
     },
+    "nordic.nvim": {
+      "rev": "9fb62116b891184049c50ca6ffb0d3bc100a1a6e",
+      "src": "https://github.com/alexvzyl/nordic.nvim"
+    },
     "nvim-autopairs": {
       "rev": "59bce2eef357189c3305e25bc6dd2d138c1683f5",
       "src": "https://github.com/windwp/nvim-autopairs"
