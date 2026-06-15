@@ -48,13 +48,13 @@ require("diffview").setup({
 })
 
 local function set_diff_hl()
-	vim.api.nvim_set_hl(0, "DiffText", { bg = "#4a5b4d", bold = false })
+	vim.api.nvim_set_hl(0, "DiffText", { bg = "#3a4660", bold = false })
 	vim.api.nvim_set_hl(0, "DiffAdd", { bg = "#34403a", bold = false })
 	vim.api.nvim_set_hl(0, "DiffDelete", { bg = "#3f3437", fg = "#5a5f6b" })
 	-- the "╱" filler over deleted regions in diffview (enhanced_diff_hl remaps
 	-- DiffDelete -> DiffviewDiffDeleteDim, which links to Comment by default)
 	vim.api.nvim_set_hl(0, "DiffviewDiffDeleteDim", { fg = "#353b47" })
-	vim.api.nvim_set_hl(0, "DiffChange", { bg = "#343b45" })
+	vim.api.nvim_set_hl(0, "DiffChange", { bg = "#2d3440" })
 	-- fold column (the gutter with "+" next to each changed chunk)
 	vim.api.nvim_set_hl(0, "FoldColumn", { bg = "#242933", fg = "#414e63" })
 end
