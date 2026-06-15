@@ -57,6 +57,7 @@ vim.pack.add({
 	"https://github.com/acksld/nvim-neoclip.lua",
 	"https://github.com/nvim-mini/mini.files",
 	"https://github.com/stevearc/oil.nvim",
+	"https://github.com/nvim-telescope/telescope-ui-select.nvim",
 })
 
 vim.pack.add({ "https://github.com/nvim-mini/mini.ai" })

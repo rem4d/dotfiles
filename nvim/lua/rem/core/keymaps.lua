@@ -129,7 +129,7 @@ end
 local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
 
-keymap.set({ "n", "v" }, "<leader>cx", vim.lsp.buf.code_action, opts) -- see available code actions, in visual mode will apply to selection
+keymap.set({ "n", "v" }, "<leader>cx", vim.lsp.buf.code_action, opts) -- see available code actions (telescope ui-select), in visual mode will apply to selection
 keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts) -- smart rename
 keymap.set("n", "ss", "<cmd>SupermavenToggle<CR>", opts)
 

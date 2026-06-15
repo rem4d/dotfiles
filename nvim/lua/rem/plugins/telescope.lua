@@ -53,12 +53,23 @@ require("telescope").setup({
 			override_file_sorter = true,
 			case_mode = "smart_case",
 		},
+		-- перехватывает vim.ui.select (в т.ч. LSP code actions) в telescope-пикер
+		["ui-select"] = {
+			require("telescope.themes").get_dropdown({
+				winblend = 10,
+				layout_config = {
+					width = 0.6,
+					height = 0.5,
+				},
+			}),
+		},
 	},
 })
 local telescope = require("telescope")
 
 telescope.load_extension("fzf")
 telescope.load_extension("live_grep_args")
+telescope.load_extension("ui-select")
 
 local builtin = require("telescope.builtin")
 local keymap = vim.keymap -- for conciseness

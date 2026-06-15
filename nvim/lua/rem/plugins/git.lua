@@ -44,7 +44,8 @@ require("gitsigns").setup({
 vim.opt.fillchars:append("diff:╱")
 
 require("diffview").setup({
-	enhanced_diff_hl = true, -- See |diffview-config-enhanced_diff_hl|
+	enhanced_diff_hl = true,
+	default_args = { "--imply-local" },
 })
 
 local function set_diff_hl()
