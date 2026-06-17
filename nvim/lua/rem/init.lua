@@ -66,6 +66,9 @@ vim.pack.add({ "https://github.com/nvim-mini/mini.bracketed" })
 -- vim.cmd([[colorscheme tokyonight]])
 vim.cmd([[colorscheme nordic]])
 
+-- brighter comments (default nordic gray4 #4C566A is too dim)
+vim.api.nvim_set_hl(0, "Comment", { fg = "#7e8aa3", italic = true })
+
 require("rem.plugins.telescope")
 require("rem.plugins.treesitter")
 require("rem.plugins.nvim-tree")

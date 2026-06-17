@@ -83,7 +83,7 @@ require("neogit").setup({
 })
 
 require("gitblame").setup({
-	enabled = true,
+	enabled = false,
 })
 
 vim.keymap.set("n", "dfo", ":DiffviewOpen origin/main...HEAD --imply-local<cr>")
