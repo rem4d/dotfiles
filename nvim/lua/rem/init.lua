@@ -15,7 +15,6 @@ vim.pack.add({
 
 	"https://github.com/nvim-tree/nvim-web-devicons",
 	"https://github.com/akinsho/bufferline.nvim",
-	"https://github.com/nvim-lualine/lualine.nvim",
 
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
 
@@ -62,6 +61,7 @@ vim.pack.add({
 
 vim.pack.add({ "https://github.com/nvim-mini/mini.ai" })
 vim.pack.add({ "https://github.com/nvim-mini/mini.bracketed" })
+vim.pack.add({ "https://github.com/nvim-mini/mini.statusline" })
 
 -- vim.cmd([[colorscheme tokyonight]])
 vim.cmd([[colorscheme nordic]])
@@ -83,33 +83,6 @@ require("bufferline").setup({
 		separator_style = "thick",
 		-- buffer_close_icon = "×",
 		show_buffer_close_icons = false,
-	},
-})
-
-require("lualine").setup({
-	options = {
-		theme = "seoul256",
-		component_separators = { left = "│", right = "│" },
-		section_separators = { left = "", right = "" },
-	},
-	sections = {
-		lualine_a = {},
-		lualine_b = {
-			{ "fancy_branch" },
-		},
-		lualine_c = {
-			{ "fancy_cwd", substitute_home = true },
-			{ "filename", path = 1 },
-		},
-		lualine_x = {
-			{ "fancy_macro" },
-			{ "fancy_diagnostics" },
-		},
-		lualine_y = {
-			{ "fancy_lsp_servers" },
-			{ "fancy_diff" },
-		},
-		lualine_z = {},
 	},
 })
 
@@ -244,3 +217,4 @@ require("neoclip").setup({
 })
 require("mini.files").setup()
 require("oil").setup()
+require("mini.statusline").setup()
