@@ -106,3 +106,11 @@ vim.keymap.set("v", "<leader>gr", builtin.git_bcommits_range, { desc = "Git bcom
 
 keymap.set("n", "<BS>", builtin.command_history, {})
 keymap.set("n", "<leader>t", builtin.resume, {})
+
+vim.api.nvim_create_user_command("DiffGrep", function()
+	local changed = vim.fn.systemlist("git diff --name-only origin/main...HEAD")
+
+	require("telescope.builtin").live_grep({
+		search_dirs = changed,
+	})
+end, {})
