@@ -46,12 +46,17 @@ vim.opt.fillchars:append("diff:╱")
 require("diffview").setup({
 	enhanced_diff_hl = true,
 	default_args = { "--imply-local" },
+	view = {
+		merge_tool = {
+			layout = "diff3_mixed",
+		},
+	},
 })
 
 local function set_diff_hl()
 	vim.api.nvim_set_hl(0, "DiffText", { bg = "#3a4660", bold = false })
 	vim.api.nvim_set_hl(0, "DiffAdd", { bg = "#34403a", bold = false })
-	vim.api.nvim_set_hl(0, "DiffDelete", { bg = "#3f3437", fg = "#5a5f6b" })
+	vim.api.nvim_set_hl(0, "DiffDelete", { fg = "#373a42" })
 	-- the "╱" filler over deleted regions in diffview (enhanced_diff_hl remaps
 	-- DiffDelete -> DiffviewDiffDeleteDim, which links to Comment by default)
 	vim.api.nvim_set_hl(0, "DiffviewDiffDeleteDim", { fg = "#353b47" })
