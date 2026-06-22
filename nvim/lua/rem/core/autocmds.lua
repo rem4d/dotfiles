@@ -37,6 +37,7 @@ autocmd("Filetype", {
 	pattern = "help",
 	command = "wincmd L",
 })
+
 -- auto-remove unused imports when saving a file
 -- vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 -- 	-- group = vim.api.nvim_create_augroup("ts_imports", { clear = true }),
@@ -51,24 +52,6 @@ autocmd("Filetype", {
 -- 		})
 -- 	end,
 -- })
-
-local save_fold = vim.api.nvim_create_augroup("PersistentFolds", { clear = true })
-
-vim.api.nvim_create_autocmd("BufWinLeave", {
-	group = save_fold,
-	pattern = "*.*",
-	callback = function()
-		vim.cmd.mkview()
-	end,
-})
-
-vim.api.nvim_create_autocmd("BufWinEnter", {
-	group = save_fold,
-	pattern = "*.*",
-	callback = function()
-		vim.cmd("silent! loadview")
-	end,
-})
 
 vim.api.nvim_create_autocmd("LspProgress", {
 	callback = function(ev)

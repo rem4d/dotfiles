@@ -28,6 +28,11 @@ opt.showtabline = 2 -- always show tabs
 opt.cursorline = false -- highlight the current line
 
 opt.jumpoptions:remove("clean") -- open previously closed buffer with CTRL-O
+
+-- mkview/loadview не должны сохранять и восстанавливать рабочую директорию:
+-- иначе loadview на BufWinEnter делает скрытый lcd и cwd «уезжает»
+opt.viewoptions:remove("curdir")
+opt.viewoptions:remove("localoptions")
 opt.writebackup = false -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
 
 -- Disable nvim intro
