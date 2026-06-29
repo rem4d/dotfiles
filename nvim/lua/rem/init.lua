@@ -222,5 +222,11 @@ require("neoclip").setup({
 	},
 })
 require("mini.files").setup()
-require("oil").setup()
+require("oil").setup({
+	git = {
+		mv = function()
+			return true
+		end,
+	},
+})
 require("mini.statusline").setup()
