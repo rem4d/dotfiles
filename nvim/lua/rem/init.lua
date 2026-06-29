@@ -228,5 +228,10 @@ require("oil").setup({
 			return true
 		end,
 	},
+	lsp_file_methods = {
+		enabled = true,
+		timeout_ms = 1000,
+		autosave_changes = false, -- или true
+	},
 })
 require("mini.statusline").setup()
