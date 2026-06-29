@@ -88,8 +88,10 @@ require("neogit").setup({
 })
 
 require("gitblame").setup({
-	enabled = false,
+	enabled = true,
 })
+
+vim.keymap.set("n", "<leader>gb", ":GitBlameToggle<cr>", { desc = "Toggle git blame" })
 
 vim.keymap.set("n", "dfo", ":DiffviewOpen origin/main...HEAD --imply-local<cr>")
 vim.keymap.set("n", "dfc", ":DiffviewClose<cr>")
