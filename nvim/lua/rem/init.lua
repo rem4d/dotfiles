@@ -55,6 +55,7 @@ vim.pack.add({
 
 	"https://github.com/acksld/nvim-neoclip.lua",
 	"https://github.com/nvim-mini/mini.files",
+	"https://github.com/nvim-mini/mini.diff",
 	"https://github.com/stevearc/oil.nvim",
 	"https://github.com/nvim-telescope/telescope-ui-select.nvim",
 })
@@ -68,6 +69,9 @@ vim.cmd([[colorscheme nordic]])
 
 -- brighter comments (default nordic gray4 #4C566A is too dim)
 vim.api.nvim_set_hl(0, "Comment", { fg = "#7e8aa3", italic = true })
+
+-- фон визуального выделения — синий вместо тёмного дефолта nordic
+vim.api.nvim_set_hl(0, "Visual", { bg = "#2e4870" })
 
 -- diff colors: nordic красит всё синим — делаем добавленное зелёным, удалённое красным
 vim.api.nvim_set_hl(0, "DiffAdd", { bg = "#33402c" }) -- добавленные строки
