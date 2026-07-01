@@ -81,6 +81,40 @@ keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Fuzzy find files in 
 -- end)
 
 keymap.set("n", "<leader>a", builtin.live_grep, { desc = "Fuzzy find recent files" })
+
+-- Возвращает путь к пакету, внутри которого лежит текущий файл,
+-- т.е. ~/projects/services/packages/<some_package>
+local function current_package_root()
+	local file = vim.api.nvim_buf_get_name(0)
+	if file == "" then
+		return nil
+	end
+	return file:match("(.*/packages/[^/]+)")
+end
+
+keymap.set("n", "<leader>fp", function()
+	local root = current_package_root()
+	if not root then
+		vim.notify("Не в пакете (нет packages/ в пути)", vim.log.levels.WARN)
+		return
+	end
+	builtin.live_grep({
+		search_dirs = { root },
+		prompt_title = "Grep: " .. vim.fn.fnamemodify(root, ":t"),
+	})
+end, { desc = "Live grep по текущему пакету" })
+
+keymap.set("n", "<leader>fP", function()
+	local root = current_package_root()
+	if not root then
+		vim.notify("Не в пакете (нет packages/ в пути)", vim.log.levels.WARN)
+		return
+	end
+	builtin.find_files({
+		search_dirs = { root },
+		prompt_title = "Files: " .. vim.fn.fnamemodify(root, ":t"),
+	})
+end, { desc = "Find files по текущему пакету" })
 keymap.set("n", "<leader>hi", builtin.command_history, { desc = "Command history" })
 keymap.set("n", "<C-f>", builtin.git_files, { desc = "" })
 keymap.set("n", "<leader>fr", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>")
