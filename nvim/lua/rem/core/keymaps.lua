@@ -155,3 +155,7 @@ vim.keymap.set("n", "gdd", vim.lsp.buf.definition)
 keymap.set("n", "<leader>r", function()
 	require("mini.files").open(vim.api.nvim_buf_get_name(0), false)
 end, { desc = "Reveal current file" })
+
+keymap.set("n", "<leader>rr", function()
+	require("nvim-tree.api").tree.find_file({ open = true, focus = true })
+end, { desc = "Reveal current file in nvim-tree" })
