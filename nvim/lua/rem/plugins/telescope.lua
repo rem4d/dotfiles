@@ -148,3 +148,10 @@ vim.api.nvim_create_user_command("DiffGrep", function()
 		search_dirs = changed,
 	})
 end, {})
+
+keymap.set("n", "<leader>ai", function()
+	builtin.live_grep({
+		additional_args = { "--hidden", "--no-ignore", "--glob=!node_modules/**", "--glob=!.git/**" },
+		prompt_title = "Live grep (incl. gitignored)",
+	})
+end, { desc = "Live grep включая gitignore, кроме node_modules" })
