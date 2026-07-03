@@ -63,6 +63,7 @@ vim.pack.add({
 vim.pack.add({ "https://github.com/nvim-mini/mini.ai" })
 vim.pack.add({ "https://github.com/nvim-mini/mini.bracketed" })
 vim.pack.add({ "https://github.com/nvim-mini/mini.statusline" })
+vim.pack.add({ "https://github.com/nvim-mini/mini.bufremove" })
 
 -- vim.cmd([[colorscheme tokyonight]])
 vim.cmd([[colorscheme nordic]])
@@ -226,6 +227,7 @@ require("neoclip").setup({
 	},
 })
 require("mini.files").setup()
+require("mini.bufremove").setup()
 require("oil").setup({
 	git = {
 		mv = function()

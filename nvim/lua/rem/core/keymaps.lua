@@ -33,8 +33,10 @@ map("n", "<leader>nw", "<cmd>noautocmd w <CR>")
 -- Quit without saving
 map("n", "<leader><leader>q", ":qa!<cr>")
 
--- Close buffer
-map("n", "<leader>q", ":bd<cr>")
+-- Close buffer, сохраняя лэйаут (окна/табы не закрываются)
+vim.keymap.set("n", "<leader>q", function()
+	require("mini.bufremove").delete(0, false)
+end, { desc = "Close buffer, сохраняя лэйаут" })
 
 -- delete single character without copying into register
 map("n", "x", '"_x')
