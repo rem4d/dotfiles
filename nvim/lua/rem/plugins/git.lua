@@ -53,31 +53,6 @@ require("diffview").setup({
 	},
 })
 
-local function set_diff_hl()
-	vim.api.nvim_set_hl(0, "DiffText", { bg = "#3a5670", bold = false })
-	vim.api.nvim_set_hl(0, "DiffAdd", { bg = "#34403a", bold = false })
-	vim.api.nvim_set_hl(0, "DiffDelete", { fg = "#373a42" })
-	-- the "╱" filler over deleted regions in diffview (enhanced_diff_hl remaps
-	-- DiffDelete -> DiffviewDiffDeleteDim, which links to Comment by default)
-	vim.api.nvim_set_hl(0, "DiffviewDiffDeleteDim", { fg = "#585f6e" })
-	vim.api.nvim_set_hl(0, "DiffChange", { bg = "#2d3440" })
-	-- fold column (the gutter with "+" next to each changed chunk)
-	vim.api.nvim_set_hl(0, "FoldColumn", { bg = "#242933", fg = "#414e63" })
-	vim.api.nvim_set_hl(0, "Folded", {
-		fg = "#414e63",
-		bg = "#1b1f26",
-		italic = true,
-	})
-end
-
--- apply now (colorscheme is already loaded by the time this file is required),
--- and re-apply on any future ColorScheme switch to nordic
-set_diff_hl()
-vim.api.nvim_create_autocmd("ColorScheme", {
-	pattern = "nordic",
-	callback = set_diff_hl,
-})
-
 vim.keymap.set("n", "<leader>gdd", ":DiffviewOpen<cr>")
 vim.keymap.set("n", "<leader>gdm", ":DiffviewOpen master..HEAD %<cr>")
 

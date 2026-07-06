@@ -65,21 +65,7 @@ vim.pack.add({ "https://github.com/nvim-mini/mini.bracketed" })
 vim.pack.add({ "https://github.com/nvim-mini/mini.statusline" })
 vim.pack.add({ "https://github.com/nvim-mini/mini.bufremove" })
 
--- vim.cmd([[colorscheme tokyonight]])
-vim.cmd([[colorscheme nordic]])
-
--- brighter comments (default nordic gray4 #4C566A is too dim)
-vim.api.nvim_set_hl(0, "Comment", { fg = "#7e8aa3", italic = true })
-
--- фон визуального выделения — синий вместо тёмного дефолта nordic
-vim.api.nvim_set_hl(0, "Visual", { bg = "#2e4870" })
-
--- diff colors: nordic красит всё синим — делаем добавленное зелёным, удалённое красным
-vim.api.nvim_set_hl(0, "DiffAdd", { bg = "#33402c" }) -- добавленные строки
-vim.api.nvim_set_hl(0, "DiffDelete", { bg = "#43292d", fg = "#7d4c52" }) -- удалённые строки / заполнитель
-vim.api.nvim_set_hl(0, "DiffChange", { bg = "#3a3f4b" }) -- изменённые строки целиком
-vim.api.nvim_set_hl(0, "DiffText", { bg = "#4c5a38" }) -- изменённый фрагмент внутри строки
-
+require("rem.colorscheme")
 require("rem.plugins.telescope")
 require("rem.plugins.treesitter")
 require("rem.plugins.nvim-tree")

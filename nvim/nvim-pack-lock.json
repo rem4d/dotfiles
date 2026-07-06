@@ -81,6 +81,14 @@
       "rev": "d94d51dcee625723aaaf8d38174b48522eaf9131",
       "src": "https://github.com/nvim-mini/mini.bracketed"
     },
+    "mini.bufremove": {
+      "rev": "4cfbb201b2760da79ca6e1a00e9f67cbc99cbb8f",
+      "src": "https://github.com/nvim-mini/mini.bufremove"
+    },
+    "mini.diff": {
+      "rev": "0743d26bd858ebe32efcf5c86a91a422a000f273",
+      "src": "https://github.com/nvim-mini/mini.diff"
+    },
     "mini.files": {
       "rev": "423d6b5afb7a94e658950d470957f830d43dd41e",
       "src": "https://github.com/nvim-mini/mini.files"
