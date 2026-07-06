@@ -84,28 +84,15 @@ map("v", "k", "gk")
 map("v", "j", "gj")
 
 -- Toggle line wrapping
-map("n", "<leader>lw", "<cmd>set wrap!<CR>")
-
--- Stay in indent mode
-map("v", "<", "<gv")
-map("v", ">", ">gv")
-
--- Keep last yanked when pasting
-map("v", "p", '"_dP')
-
--- Move cursor at the end of yanked selection
+-- mapMove cursor at the end of yanked selection
 map("v", "y", "y`]")
 
--- Copy/paste
-map("n", "<C-y>", '"*y')
-map("x", "<C-y>", '"*y')
-map("n", "<C-p>", ':set paste<cr>"*]p:set nopaste<cr>')
-map("x", "<C-p>", ':set paste<cr>"*]p:set nopaste<cr>')
--- Copy/paste
--- nnoremap <silent> s :set opfunc=PasteReplace<CR>g@
--- vnoremap <silent> s :<C-U>call PasteReplace(visualmode(), 1)<CR>
-map("v", "s", ":<C-U>call PasteReplace(visualmode(),1)<cr>")
-map("v", "s", ":<C-U>call PasteReplace(visualmode(),1)<cr>")
+-- Yank into system clipboard
+vim.keymap.set({ "n", "v" }, "<C-y>", '"+y') -- yank motion
+
+-- Paste from system
+vim.keymap.set("n", "<C-p>", '"+p') -- paste after cursor
+vim.keymap.set("n", "<C-P>", '"+P') -- paste before cursor
 
 -- Copy current file path with line number
 -- map("n", "<leader>cp", ':let @+ = expand("%")<cr>')
