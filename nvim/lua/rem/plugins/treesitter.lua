@@ -36,6 +36,10 @@ local ignore_filetypes = {
 	"snacks_win",
 }
 
+local ignore_indent_filetypes = {
+	lua = true,
+}
+
 vim.api.nvim_create_autocmd("FileType", { -- enable treesitter highlighting and indents
 	callback = function(args)
 		local filetype = args.match
@@ -45,7 +49,9 @@ vim.api.nvim_create_autocmd("FileType", { -- enable treesitter highlighting and 
 
 		local lang = vim.treesitter.language.get_lang(filetype)
 		if vim.treesitter.language.add(lang) then
-			vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+			if not ignore_indent_filetypes[filetype] then
+				vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+			end
 			vim.treesitter.start()
 		end
 	end,
