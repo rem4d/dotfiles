@@ -70,6 +70,7 @@ require("rem.plugins.telescope")
 require("rem.plugins.treesitter")
 require("rem.plugins.nvim-tree")
 require("rem.plugins.git")
+require("rem.plugins.lint")
 require("rem.plugins.blink")
 require("rem.plugins.mason")
 require("rem.plugins.markdown")
@@ -80,30 +81,6 @@ require("bufferline").setup({
 		separator_style = "thick",
 		-- buffer_close_icon = "×",
 		show_buffer_close_icons = false,
-	},
-})
-
-require("conform").setup({
-	formatters_by_ft = {
-		javascript = { "oxfmt", "eslint_d" },
-		typescript = { "oxfmt", "eslint_d" },
-		javascriptreact = { "oxfmt", "eslint_d" },
-		typescriptreact = { "oxfmt", "eslint_d" },
-		css = { "prettier" },
-		scss = { "prettier" },
-		html = { "prettierd" },
-		svg = { "prettier" },
-		json = { "prettier" },
-		yaml = { "prettier" },
-		markdown = { "prettier" },
-		graphql = { "prettier" },
-		lua = { "stylua" },
-		python = { "isort", "black" },
-	},
-	format_on_save = {
-		timeout_ms = 1000,
-		lsp_format = "fallback",
-		async = false,
 	},
 })
 
