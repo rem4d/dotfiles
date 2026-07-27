@@ -3,11 +3,9 @@
 -----------------------------------------------------------
 
 local function map(mode, lhs, rhs, opts)
-	local options = { noremap = true, silent = true }
-	if opts then
-		options = vim.tbl_extend("force", options, opts)
-	end
-	vim.api.nvim_set_keymap(mode, lhs, rhs, options)
+  local options = { noremap = true, silent = true }
+  if opts then options = vim.tbl_extend("force", options, opts) end
+  vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
 -- Set <space> as the leader key
@@ -34,9 +32,12 @@ map("n", "<leader>nw", "<cmd>noautocmd w <CR>")
 map("n", "<leader><leader>q", ":qa!<cr>")
 
 -- Close buffer, сохраняя лэйаут (окна/табы не закрываются)
-vim.keymap.set("n", "<leader>q", function()
-	require("mini.bufremove").delete(0, false)
-end, { desc = "Close buffer, сохраняя лэйаут" })
+vim.keymap.set(
+  "n",
+  "<leader>q",
+  function() require("mini.bufremove").delete(0, false) end,
+  { desc = "Close buffer, сохраняя лэйаут" }
+)
 
 -- delete single character without copying into register
 map("n", "x", '"_x')
@@ -97,19 +98,19 @@ vim.keymap.set("n", "<C-P>", '"+P') -- paste before cursor
 -- Copy current file path with line number
 -- map("n", "<leader>cp", ':let @+ = expand("%")<cr>')
 vim.keymap.set("n", "<leader>cp", function()
-	local path = vim.fn.expand("%")
-	local line = vim.fn.line(".")
-	local result = path .. ":" .. line
-	vim.fn.setreg("+", result)
-	print("Copied: ", result)
+  local path = vim.fn.expand("%")
+  local line = vim.fn.line(".")
+  local result = path .. ":" .. line
+  vim.fn.setreg("+", result)
+  print("Copied: ", result)
 end, { desc = "Copy file path" })
 
 -- Tmux navigator
 if vim.fn.executable("tmux") == 1 then
-	map("n", "<C-h>", ":TmuxNavigateLeft<cr>")
-	map("n", "<C-j>", ":TmuxNavigateDown<cr>")
-	map("n", "<C-k>", ":TmuxNavigateUp<cr>")
-	map("n", "<C-l>", ":TmuxNavigateRight<cr>")
+  map("n", "<C-h>", ":TmuxNavigateLeft<cr>")
+  map("n", "<C-j>", ":TmuxNavigateDown<cr>")
+  map("n", "<C-k>", ":TmuxNavigateUp<cr>")
+  map("n", "<C-l>", ":TmuxNavigateRight<cr>")
 end
 
 -----------------------------------------------------------
@@ -124,25 +125,38 @@ keymap.set("n", "ss", "<cmd>SupermavenToggle<CR>", opts)
 
 -- :restart
 vim.keymap.set("n", "<leader>R", function()
-	local session = vim.fn.stdpath("state") .. "/restart_session.vim"
-	vim.cmd("mksession! " .. vim.fn.fnameescape(session))
-	vim.cmd("restart source " .. vim.fn.fnameescape(session))
+  local session = vim.fn.stdpath("state") .. "/restart_session.vim"
+  vim.cmd("mksession! " .. vim.fn.fnameescape(session))
+  vim.cmd("restart source " .. vim.fn.fnameescape(session))
 end, { desc = "Restart Neovim" })
 
 -- diagnostics
 
 local opts = { noremap = true, silent = true }
--- vim.keymap.set("n", "<leader>d", "<cmd>lua vim.diagnostic.enable(false)<cr>", opts)
--- vim.keymap.set("n", "<leader>e", "<cmd>lua vim.diagnostic.enable()<cr>", opts)
+vim.keymap.set("n", "<leader>dd", function()
+  vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+end, opts)
+vim.keymap.set("n", "<leader>de", "<cmd>lua vim.diagnostic.enable()<cr>", opts)
 vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts) -- show diagnostics for line
 
-vim.keymap.set("n", "<leader>ca", "<cmd>%bd|e#|bd#<cr>", { desc = "Close all buffers except current" })
+vim.keymap.set(
+  "n",
+  "<leader>ca",
+  "<cmd>%bd|e#|bd#<cr>",
+  { desc = "Close all buffers except current" }
+)
 vim.keymap.set("n", "gdd", vim.lsp.buf.definition)
 
-keymap.set("n", "<leader>r", function()
-	require("mini.files").open(vim.api.nvim_buf_get_name(0), false)
-end, { desc = "Reveal current file" })
+keymap.set(
+  "n",
+  "<leader>r",
+  function() require("mini.files").open(vim.api.nvim_buf_get_name(0), false) end,
+  { desc = "Reveal current file" }
+)
 
-keymap.set("n", "<leader>rr", function()
-	require("nvim-tree.api").tree.find_file({ open = true, focus = true })
-end, { desc = "Reveal current file in nvim-tree" })
+keymap.set(
+  "n",
+  "<leader>rr",
+  function() require("nvim-tree.api").tree.find_file({ open = true, focus = true }) end,
+  { desc = "Reveal current file in nvim-tree" }
+)
