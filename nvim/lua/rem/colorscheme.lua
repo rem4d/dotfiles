@@ -16,7 +16,8 @@ vim.api.nvim_set_hl(0, "DiffText", { bg = "#4c5a38" }) -- изменённый �
 local function set_diff_hl()
 	vim.api.nvim_set_hl(0, "DiffText", { bg = "#3a5670", bold = false })
 	vim.api.nvim_set_hl(0, "DiffAdd", { bg = "#34403a", bold = false })
-	vim.api.nvim_set_hl(0, "DiffDelete", { fg = "#373a42" })
+	-- удалённые строки — красный фон + читаемый красный текст (было серым)
+	vim.api.nvim_set_hl(0, "DiffDelete", { bg = "#43292d", fg = "#c98a90" })
 	-- the "╱" filler over deleted regions in diffview (enhanced_diff_hl remaps
 	-- DiffDelete -> DiffviewDiffDeleteDim, which links to Comment by default)
 	vim.api.nvim_set_hl(0, "DiffviewDiffDeleteDim", { fg = "#585f6e" })
