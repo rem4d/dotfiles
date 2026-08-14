@@ -33,6 +33,10 @@
       "rev": "4516612fe98ff56ae0415a259ff6361a89419b0a",
       "src": "https://github.com/sindrets/diffview.nvim"
     },
+    "fff": {
+      "rev": "6398d32c0c2c2568e3d1953183cc99b751fa30dd",
+      "src": "https://github.com/dmtrKovalenko/fff"
+    },
     "friendly-snippets": {
       "rev": "6cd7280adead7f586db6fccbd15d2cac7e2188b9",
       "src": "https://github.com/rafamadriz/friendly-snippets"

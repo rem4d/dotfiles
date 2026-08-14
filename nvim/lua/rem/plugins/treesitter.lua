@@ -47,8 +47,12 @@ vim.api.nvim_create_autocmd("FileType", { -- enable treesitter highlighting and 
 			return
 		end
 
+		if filetype == nil or filetype == "" then
+			return
+		end
+
 		local lang = vim.treesitter.language.get_lang(filetype)
-		if vim.treesitter.language.add(lang) then
+		if lang and vim.treesitter.language.add(lang) then
 			if not ignore_indent_filetypes[filetype] then
 				vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 			end

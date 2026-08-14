@@ -72,6 +72,24 @@ vim.pack.add({ "https://github.com/nvim-mini/mini.ai" })
 vim.pack.add({ "https://github.com/nvim-mini/mini.bracketed" })
 vim.pack.add({ "https://github.com/nvim-mini/mini.statusline" })
 vim.pack.add({ "https://github.com/nvim-mini/mini.bufremove" })
+-- fff: автокоманда должна быть до pack.add, иначе событие install
+-- сработает раньше обработчика и бинарник не соберётся
+vim.g.fff = {
+  lazy_sync = true,
+  debug = { enabled = true, show_scores = true },
+}
+
+vim.api.nvim_create_autocmd("PackChanged", {
+  callback = function(ev)
+    local name, kind = ev.data.spec.name, ev.data.kind
+    if name == "fff" and (kind == "install" or kind == "update") then
+      if not ev.data.active then vim.cmd.packadd("fff") end
+      require("fff.download").download_or_build_binary()
+    end
+  end,
+})
+
+vim.pack.add({ "https://github.com/dmtrKovalenko/fff" })
 
 require("rem.colorscheme")
 require("rem.plugins.telescope")
@@ -212,20 +230,4 @@ require("oil").setup({
 })
 require("mini.statusline").setup()
 
--- local harpoon = require("harpoon")
-
--- REQUIRED
--- harpoon:setup({})
--- REQUIRED
-
--- vim.keymap.set("n", "<leader>l", function() harpoon:list():add() end)
--- vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
---
--- vim.keymap.set("n", "<C-h>", function() harpoon:list():select(1) end)
--- vim.keymap.set("n", "<C-t>", function() harpoon:list():select(2) end)
--- vim.keymap.set("n", "<C-n>", function() harpoon:list():select(3) end)
--- vim.keymap.set("n", "<C-s>", function() harpoon:list():select(4) end)
---
--- -- Toggle previous & next buffers stored within Harpoon list
--- vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end)
--- vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
+vim.keymap.set("n", "ff", function() require("fff").find_files() end, { desc = "FFFind files" })

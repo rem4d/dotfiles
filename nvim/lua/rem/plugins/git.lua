@@ -88,3 +88,13 @@ vim.keymap.set(
   { desc = "Diffview против базовой ветки (master/main)" }
 )
 vim.keymap.set("n", "dvc", ":DiffviewClose<cr>")
+
+vim.pack.add({
+  "https://github.com/barrettruth/diffs.nvim",
+})
+
+vim.g.diffs = {
+  integrations = {
+    fugitive = true,
+  },
+}
