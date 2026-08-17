@@ -53,6 +53,7 @@ vim.pack.add({
   "https://github.com/lewis6991/gitsigns.nvim",
   "https://github.com/f-person/git-blame.nvim",
   "https://github.com/sindrets/diffview.nvim",
+  "https://github.com/esmuellert/codediff.nvim",
   "https://github.com/neogitorg/neogit",
   "https://github.com/isakbm/gitgraph.nvim",
   "https://github.com/rbong/vim-flog",

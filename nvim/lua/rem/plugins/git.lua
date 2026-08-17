@@ -93,6 +93,14 @@ vim.pack.add({
   "https://github.com/barrettruth/diffs.nvim",
 })
 
+-- CodeDiff: диффы в стиле VSCode (двухуровневая подсветка: строки + символы).
+-- Библиотека скачивается сама при первом использовании (`:CodeDiff install` — вручную).
+require("codediff").setup({
+  diff = {
+    layout = "side-by-side",
+  },
+})
+
 vim.g.diffs = {
   integrations = {
     fugitive = true,
