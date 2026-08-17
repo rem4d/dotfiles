@@ -97,8 +97,17 @@ vim.pack.add({
 -- Библиотека скачивается сама при первом использовании (`:CodeDiff install` — вручную).
 require("codediff").setup({
   diff = {
-    layout = "side-by-side",
+    layout = "inline",
   },
+})
+
+-- ╱ на месте вырезанного — тот же фон и цвет символа, что у diffview
+-- (DiffviewDiffDeleteDim). Ставим после setup(): плагин задаёт CodeDiffFiller
+-- через `default = true`, поэтому явное значение он не перезапишет.
+local diff_colors = require("rem.colorscheme").diff
+vim.api.nvim_set_hl(0, "CodeDiffFiller", {
+  bg = diff_colors.del,
+  fg = diff_colors.filler_fg,
 })
 
 vim.g.diffs = {

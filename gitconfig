@@ -8,11 +8,19 @@
     diffFilter = delta --color-only
 
 [delta]
-    ; features = collared-trogon 
+    ; features = collared-trogon
     ; features = mantis-shrimp
     features = chameleon
     navigate = true  # use n and N to move between diff sections
     dark = true      # or light = true, or omit for auto-detection
+
+    plus-style = syntax "#34403a"
+    minus-style = syntax "#33262a"
+    # изменённые фрагменты внутри строки — тот же приём, фон поярче
+    plus-emph-style = syntax bold "#3f5a48"
+    minus-emph-style = syntax bold "#4d2f35"
+    plus-non-emph-style = plus-style
+    minus-non-emph-style = minus-style
 
 [merge]
     conflictStyle = zdiff3
