@@ -106,7 +106,7 @@ require("codediff").setup({
 -- через `default = true`, поэтому явное значение он не перезапишет.
 local diff_colors = require("rem.colorscheme").diff
 vim.api.nvim_set_hl(0, "CodeDiffFiller", {
-  bg = diff_colors.del,
+  bg = "NONE",
   fg = diff_colors.filler_fg,
 })
 
