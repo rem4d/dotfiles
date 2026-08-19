@@ -99,6 +99,13 @@ require("codediff").setup({
   diff = {
     layout = "inline",
   },
+  keymaps = {
+    view = {
+      -- переход по файлам: Tab/Shift+Tab вместо дефолтных ]f/[f
+      next_file = "<Tab>",
+      prev_file = "<S-Tab>",
+    },
+  },
 })
 
 -- ╱ на месте вырезанного — тот же фон и цвет символа, что у diffview
