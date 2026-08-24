@@ -104,6 +104,12 @@ require("codediff").setup({
       -- переход по файлам: Tab/Shift+Tab вместо дефолтных ]f/[f
       next_file = "<Tab>",
       prev_file = "<S-Tab>",
+      -- тот же тоггл сайдбара, что и у diffview (там это дефолтный <leader>b)
+      toggle_explorer = "<leader>b",
+      focus_explorer = "<leader>e",
+      -- переход по ханкам как в diffview — штатные ]c/[c из diff-режима Vim
+      next_hunk = "]c",
+      prev_hunk = "[c",
     },
   },
 })
