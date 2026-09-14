@@ -3,3 +3,4 @@ nvim/lazy-lock.json
 private*
 nvim_prev
 .mcp.json
+bin
