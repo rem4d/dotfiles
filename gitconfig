@@ -27,3 +27,5 @@
 
 [include]
     path = ~/projects/dotfiles/delta-themes.gitconfig
+[init]
+	defaultBranch = main

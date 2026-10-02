@@ -17,6 +17,10 @@
       "rev": "655133c3b4c3e5e05ec549b9f8cc2894ac6f51b3",
       "src": "https://github.com/akinsho/bufferline.nvim"
     },
+    "catppuccin": {
+      "rev": "edefef779ab08ce1a4a404713e3012b0d202bd35",
+      "src": "https://github.com/catppuccin/nvim"
+    },
     "codediff.nvim": {
       "rev": "e08a35a56a52c290398ebfaec33c34cfcf2d0f3c",
       "src": "https://github.com/esmuellert/codediff.nvim"
@@ -36,6 +40,10 @@
     "diffview.nvim": {
       "rev": "4516612fe98ff56ae0415a259ff6361a89419b0a",
       "src": "https://github.com/sindrets/diffview.nvim"
+    },
+    "dooing": {
+      "rev": "4c4ac78088cf462398a0206e79669936a184175f",
+      "src": "https://github.com/atiladefreitas/dooing"
     },
     "fff": {
       "rev": "6398d32c0c2c2568e3d1953183cc99b751fa30dd",

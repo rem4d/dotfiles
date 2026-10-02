@@ -77,6 +77,8 @@ vim.pack.add({ "https://github.com/nvim-mini/mini.bufremove" })
 -- сработает раньше обработчика и бинарник не соберётся
 vim.g.fff = {
   lazy_sync = true,
+  -- совпадения: свой цвет вместо IncSearch (тёмный текст nordic не виден на тёмном фоне)
+  hl = { matched = "FFFMatch", grep_match = "FFFMatch" },
   debug = { enabled = true, show_scores = true },
 }
 

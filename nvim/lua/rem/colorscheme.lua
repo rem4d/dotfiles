@@ -7,6 +7,9 @@ vim.api.nvim_set_hl(0, "Comment", { fg = "#7e8aa3", italic = true })
 -- фон визуального выделения — синий вместо тёмного дефолта nordic
 vim.api.nvim_set_hl(0, "Visual", { bg = "#2e4870" })
 
+-- совпадения в fff (ff/fg): яркий жёлтый текст, читается и на строке под курсором
+vim.api.nvim_set_hl(0, "FFFMatch", { fg = "#ebcb8b", bg = "#4c566a", bold = true })
+
 -- Единая палитра диффов: отсюда красятся и встроенные Diff*/diffview, и codediff
 -- (см. rem.plugins.git). Приглушённый красный: было #43292d — слишком яркое.
 local diff = {
