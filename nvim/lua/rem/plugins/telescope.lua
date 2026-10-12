@@ -135,6 +135,35 @@ keymap.set("n", "gi", vim.lsp.buf.implementation, {})
 
 -- Add to init.lua
 vim.keymap.set("v", "<leader>gr", builtin.git_bcommits_range, { desc = "Git bcommits range" })
+
+-- мои коммиты в текущем репозитории (автор = git config user.email)
+-- <CR> — открыть коммит в diffview, <C-y> — скопировать хэш
+keymap.set("n", "<leader>mc", function()
+	local email = vim.trim(vim.fn.system({ "git", "config", "user.email" }))
+	if vim.v.shell_error ~= 0 or email == "" then
+		vim.notify("git user.email не задан", vim.log.levels.WARN)
+		return
+	end
+	local actions = require("telescope.actions")
+	local action_state = require("telescope.actions.state")
+	builtin.git_commits({
+		prompt_title = "Мои коммиты: " .. email,
+		git_command = { "git", "log", "--pretty=oneline", "--abbrev-commit", "--author=" .. email },
+		attach_mappings = function(_, map)
+			actions.select_default:replace(function(prompt_bufnr)
+				local entry = action_state.get_selected_entry()
+				actions.close(prompt_bufnr)
+				vim.cmd("DiffviewOpen " .. entry.value .. "^!")
+			end)
+			map({ "i", "n" }, "<C-y>", function()
+				local hash = action_state.get_selected_entry().value
+				vim.fn.setreg("+", hash)
+				vim.notify("Скопирован " .. hash)
+			end)
+			return true
+		end,
+	})
+end, { desc = "Мои git-коммиты" })
 -- keymap.set("n", "<leader>rg", "<cmd>Telescope grep_string search=<cr>")
 -- keymap.set("n", "<C-b>", "<cmd>Telescope buffers<cr>", {})
 
