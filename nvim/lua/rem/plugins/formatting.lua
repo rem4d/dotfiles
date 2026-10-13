@@ -28,6 +28,7 @@ require("conform").setup({
     graphql = { "prettier" },
     lua = { "stylua" },
     python = { "isort", "black" },
+    sql = { "sqlfluff" },
   },
   format_on_save = {
     timeout_ms = 1000,
