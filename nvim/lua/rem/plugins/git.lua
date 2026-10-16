@@ -69,7 +69,7 @@ local function diff_base_branch()
     return vim.v.shell_error == 0
   end
 
-  for _, branch in ipairs({ "origin/master", "origin/main" }) do
+  for _, branch in ipairs({ "master", "main" }) do
     if ref_exists(branch) then
       vim.cmd("DiffviewOpen " .. branch .. "...HEAD --imply-local")
       return
