@@ -39,6 +39,24 @@ vim.keymap.set(
   { desc = "Close buffer, сохраняя лэйаут" }
 )
 
+-- Close all buffers except current (несохранённые пропускаются)
+vim.keymap.set("n", "<leader>bo", function()
+  local cur = vim.api.nvim_get_current_buf()
+  local skipped = 0
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if buf ~= cur and vim.bo[buf].buflisted then
+      if vim.bo[buf].modified then
+        skipped = skipped + 1
+      else
+        require("mini.bufremove").delete(buf, false)
+      end
+    end
+  end
+  if skipped > 0 then
+    vim.notify(("Пропущено несохранённых буферов: %d"):format(skipped), vim.log.levels.WARN)
+  end
+end, { desc = "Close other buffers" })
+
 -- delete single character without copying into register
 map("n", "x", '"_x')
 
