@@ -45,6 +45,47 @@ require("diffview").setup({
   },
 })
 
+-- Автодополнение `:DiffviewOpen` в upstream собирает кандидатов через
+-- `unpack(...)` — на репах с >~8000 git-ссылок (теги + ветки) LuaJIT падает с
+-- "too many results to unpack" (init.lua:213). Форк dlyongemallo/diffview.nvim
+-- это починил через расширение списка; здесь тот же компл., но на list_extend.
+do
+  local dv = require("diffview")
+  dv.completers.DiffviewOpen = function(ctx)
+    local has_rev_arg = false
+    local adapter = dv.get_adapter()
+
+    for i = 2, math.min(#ctx.args, ctx.divideridx) do
+      if ctx.args[i]:sub(1, 1) ~= "-" and i ~= ctx.argidx then
+        has_rev_arg = true
+        break
+      end
+    end
+
+    local candidates = {}
+
+    if ctx.argidx > ctx.divideridx then
+      if adapter then
+        vim.list_extend(candidates, adapter:path_candidates(ctx.arg_lead))
+      else
+        vim.list_extend(candidates, vim.fn.getcompletion(ctx.arg_lead, "file", 0))
+      end
+    elseif adapter then
+      if not has_rev_arg and ctx.arg_lead:sub(1, 1) ~= "-" then
+        vim.list_extend(candidates, adapter.comp.open:get_all_names())
+        vim.list_extend(candidates, adapter:rev_candidates(ctx.arg_lead, { accept_range = true }))
+      else
+        vim.list_extend(
+          candidates,
+          adapter.comp.open:get_completion(ctx.arg_lead) or adapter.comp.open:get_all_names()
+        )
+      end
+    end
+
+    return candidates
+  end
+end
+
 vim.keymap.set("n", "<leader>gdd", ":DiffviewOpen<cr>")
 vim.keymap.set("n", "<leader>gdm", ":DiffviewOpen master..HEAD %<cr>")
 
