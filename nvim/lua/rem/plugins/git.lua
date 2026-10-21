@@ -100,26 +100,77 @@ require("gitblame").setup({
 
 vim.keymap.set("n", "<leader>gb", ":GitBlameToggle<cr>", { desc = "Toggle git blame" })
 
--- Открывает diff против базовой ветки, пробуя origin/master, затем origin/main.
--- Если ни одной нет — сообщает через vim.notify.
-local function diff_base_branch()
+-- Каталог текущего файла (или cwd), чтобы git-команды работали из нужного репозитория.
+local function git_dir()
   local dir = vim.fn.expand("%:p:h")
   if dir == "" then dir = vim.fn.getcwd() end
-  local function ref_exists(ref)
-    vim.fn.system({ "git", "-C", dir, "rev-parse", "--verify", "--quiet", ref })
-    return vim.v.shell_error == 0
-  end
+  return dir
+end
 
+local function ref_exists(dir, ref)
+  vim.fn.system({ "git", "-C", dir, "rev-parse", "--verify", "--quiet", ref })
+  return vim.v.shell_error == 0
+end
+
+-- Базовая ветка репозитория: master, иначе main. nil, если нет ни одной.
+local function find_base_branch(dir)
   for _, branch in ipairs({ "master", "main" }) do
-    if ref_exists(branch) then
-      vim.cmd("DiffviewOpen " .. branch .. "...HEAD --imply-local")
+    if ref_exists(dir, branch) then return branch end
+  end
+  return nil
+end
+
+-- Открывает diff против базовой ветки, пробуя master, затем main.
+-- Если ни одной нет — сообщает через vim.notify.
+local function diff_base_branch()
+  local dir = git_dir()
+  local base = find_base_branch(dir)
+  if not base then
+    vim.notify("Diffview: не найдено ни master, ни main", vim.log.levels.ERROR)
+    return
+  end
+  vim.cmd("DiffviewOpen " .. base .. "...HEAD --imply-local")
+end
+
+-- Открывает diff Merge Request по номеру без checkout: origin/<base>...origin/mr/<iid>.
+-- Нужна fetch-спека MR-рефов GitLab в репозитории:
+--   git config --add remote.origin.fetch '+refs/merge-requests/*/head:refs/remotes/origin/mr/*'
+local function diff_merge_request()
+  vim.ui.input({ prompt = "MR номер: " }, function(iid)
+    if not iid or iid == "" then return end
+    iid = vim.trim(iid):gsub("^!", "")
+
+    local dir = git_dir()
+    local base = find_base_branch(dir)
+    if not base then
+      vim.notify("Diffview: не найдено ни master, ни main", vim.log.levels.ERROR)
       return
     end
-  end
-  vim.notify(
-    "Diffview: не найдено ни origin/master, ни origin/main",
-    vim.log.levels.ERROR
-  )
+
+    vim.notify("git fetch origin…", vim.log.levels.INFO)
+    vim.fn.system({ "git", "-C", dir, "fetch", "origin" })
+    if vim.v.shell_error ~= 0 then
+      vim.notify(
+        "Diffview: git fetch origin завершился с ошибкой",
+        vim.log.levels.ERROR
+      )
+      return
+    end
+
+    local mr_ref = "origin/mr/" .. iid
+    if not ref_exists(dir, mr_ref) then
+      vim.notify(
+        "Diffview: нет рефа "
+          .. mr_ref
+          .. ". Добавь fetch-спеку: git config --add remote.origin.fetch "
+          .. "'+refs/merge-requests/*/head:refs/remotes/origin/mr/*'",
+        vim.log.levels.ERROR
+      )
+      return
+    end
+
+    vim.cmd("DiffviewOpen origin/" .. base .. "..." .. mr_ref .. " --imply-local")
+  end)
 end
 
 vim.keymap.set(
@@ -127,6 +178,12 @@ vim.keymap.set(
   "dvo",
   diff_base_branch,
   { desc = "Diffview против базовой ветки (master/main)" }
+)
+vim.keymap.set(
+  "n",
+  "dvm",
+  diff_merge_request,
+  { desc = "Diffview по номеру MR (без checkout)" }
 )
 vim.keymap.set("n", "dvc", ":DiffviewClose<cr>")
 
