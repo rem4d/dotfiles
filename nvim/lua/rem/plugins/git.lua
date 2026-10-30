@@ -132,14 +132,97 @@ local function diff_base_branch()
   vim.cmd("DiffviewOpen " .. base .. "...HEAD --imply-local")
 end
 
--- Открывает diff Merge Request по номеру без checkout: origin/<base>...origin/mr/<iid>.
--- Нужна fetch-спека MR-рефов GitLab в репозитории:
---   git config --add remote.origin.fetch '+refs/merge-requests/*/head:refs/remotes/origin/mr/*'
-local function diff_merge_request()
-  vim.ui.input({ prompt = "MR номер: " }, function(iid)
-    if not iid or iid == "" then return end
-    iid = vim.trim(iid):gsub("^!", "")
+-- Фетчит базовую ветку и реф MR (refs/merge-requests/<iid>/head) в origin/mr/<iid>.
+-- Реф MR указывается явно, fetch-спека в репозитории не нужна. Возвращает true при успехе.
+local function fetch_merge_request(dir, base, iid)
+  vim.notify("git fetch origin " .. base .. " !" .. iid .. "…", vim.log.levels.INFO)
+  local out = vim.fn.system({
+    "git",
+    "-C",
+    dir,
+    "fetch",
+    "origin",
+    base,
+    "+refs/merge-requests/" .. iid .. "/head:refs/remotes/origin/mr/" .. iid,
+  })
+  if vim.v.shell_error ~= 0 then
+    vim.notify(
+      "Diffview: не удалось получить MR !" .. iid .. ":\n" .. vim.trim(out),
+      vim.log.levels.ERROR
+    )
+    return false
+  end
+  return true
+end
 
+local function rev_parse(dir, ref)
+  local sha = vim.trim(vim.fn.system({ "git", "-C", dir, "rev-parse", "--verify", "--quiet", ref }))
+  if vim.v.shell_error ~= 0 then return nil end
+  return sha
+end
+
+-- Отметка «просмотрено до этого коммита» — локальный реф, переживает force-push автора.
+local function reviewed_ref(iid) return "refs/reviewed/mr/" .. iid end
+
+-- Последний открытый MR и SHA его головы на момент открытия — его и отмечает dvr.
+local last_mr = nil
+
+local function remember_mr(dir, iid)
+  local sha = rev_parse(dir, "origin/mr/" .. iid)
+  if sha then last_mr = { dir = dir, iid = iid, sha = sha } end
+end
+
+-- Спрашивает номер MR (по умолчанию — последний открытый) и передаёт его в callback.
+local function ask_mr(callback)
+  vim.ui.input(
+    { prompt = "MR номер: ", default = last_mr and last_mr.iid or nil },
+    function(iid)
+      if not iid or iid == "" then return end
+      callback((vim.trim(iid):gsub("^!", "")))
+    end
+  )
+end
+
+-- Открывает diff Merge Request по номеру без checkout: origin/<base>...origin/mr/<iid>.
+local function diff_merge_request()
+  ask_mr(function(iid)
+    local dir = git_dir()
+    local base = find_base_branch(dir)
+    if not base then
+      vim.notify("Diffview: не найдено ни master, ни main", vim.log.levels.ERROR)
+      return
+    end
+    if not fetch_merge_request(dir, base, iid) then return end
+
+    remember_mr(dir, iid)
+    local reviewed = rev_parse(dir, reviewed_ref(iid))
+    if reviewed and reviewed ~= last_mr.sha then
+      vim.notify("MR !" .. iid .. ": есть изменения с прошлого просмотра — dvn", vim.log.levels.INFO)
+    end
+
+    vim.cmd("DiffviewOpen origin/" .. base .. "...origin/mr/" .. iid .. " --imply-local")
+  end)
+end
+
+-- Отмечает последний открытый MR просмотренным: та голова MR, что была показана в dvm/dvn.
+local function mark_merge_request_reviewed()
+  if not last_mr then
+    vim.notify("Сначала открой MR через dvm или dvn", vim.log.levels.WARN)
+    return
+  end
+  vim.fn.system({ "git", "-C", last_mr.dir, "update-ref", reviewed_ref(last_mr.iid), last_mr.sha })
+  if vim.v.shell_error ~= 0 then
+    vim.notify("Не удалось записать " .. reviewed_ref(last_mr.iid), vim.log.levels.ERROR)
+    return
+  end
+  vim.notify("MR !" .. last_mr.iid .. " просмотрен до " .. last_mr.sha:sub(1, 8))
+end
+
+-- Открывает изменения MR с последней отметки dvr: refs/reviewed/mr/<iid>..origin/mr/<iid>.
+-- Если автор сделал rebase/force-push, предлагает range-diff (сравнение самих патчей),
+-- потому что обычный diff потянет изменения из базовой ветки.
+local function diff_merge_request_since_reviewed()
+  ask_mr(function(iid)
     local dir = git_dir()
     local base = find_base_branch(dir)
     if not base then
@@ -147,29 +230,42 @@ local function diff_merge_request()
       return
     end
 
-    vim.notify("git fetch origin…", vim.log.levels.INFO)
-    vim.fn.system({ "git", "-C", dir, "fetch", "origin" })
-    if vim.v.shell_error ~= 0 then
+    local old = rev_parse(dir, reviewed_ref(iid))
+    if not old then
       vim.notify(
-        "Diffview: git fetch origin завершился с ошибкой",
-        vim.log.levels.ERROR
+        "MR !" .. iid .. " ещё не отмечен просмотренным — открой через dvm и нажми dvr",
+        vim.log.levels.WARN
       )
       return
     end
+    if not fetch_merge_request(dir, base, iid) then return end
 
-    local mr_ref = "origin/mr/" .. iid
-    if not ref_exists(dir, mr_ref) then
-      vim.notify(
-        "Diffview: нет рефа "
-          .. mr_ref
-          .. ". Добавь fetch-спеку: git config --add remote.origin.fetch "
-          .. "'+refs/merge-requests/*/head:refs/remotes/origin/mr/*'",
-        vim.log.levels.ERROR
-      )
+    remember_mr(dir, iid)
+    local new = last_mr.sha
+    if old == new then
+      vim.notify("MR !" .. iid .. ": новых изменений нет")
       return
     end
 
-    vim.cmd("DiffviewOpen origin/" .. base .. "..." .. mr_ref .. " --imply-local")
+    vim.fn.system({ "git", "-C", dir, "merge-base", "--is-ancestor", old, new })
+    if vim.v.shell_error == 0 then
+      vim.cmd("DiffviewOpen " .. old .. ".." .. new)
+      return
+    end
+
+    vim.ui.select({ "range-diff", "diff" }, {
+      prompt = "MR !" .. iid .. " переписан (rebase/force-push). Как показать?",
+      format_item = function(item)
+        if item == "range-diff" then return "range-diff — сравнить патчи до и после" end
+        return "diff — старая голова → новая (с изменениями из " .. base .. ")"
+      end,
+    }, function(choice)
+      if choice == "range-diff" then
+        vim.cmd("tab Git range-diff origin/" .. base .. " " .. old .. " " .. new)
+      elseif choice == "diff" then
+        vim.cmd("DiffviewOpen " .. old .. ".." .. new)
+      end
+    end)
   end)
 end
 
@@ -184,6 +280,18 @@ vim.keymap.set(
   "dvm",
   diff_merge_request,
   { desc = "Diffview по номеру MR (без checkout)" }
+)
+vim.keymap.set(
+  "n",
+  "dvr",
+  mark_merge_request_reviewed,
+  { desc = "Отметить последний открытый MR просмотренным" }
+)
+vim.keymap.set(
+  "n",
+  "dvn",
+  diff_merge_request_since_reviewed,
+  { desc = "Diffview: новое в MR с последнего просмотра" }
 )
 vim.keymap.set("n", "dvc", ":DiffviewClose<cr>")
 
