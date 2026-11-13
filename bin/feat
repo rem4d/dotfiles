@@ -2,17 +2,24 @@
 # feat — фича в нескольких репозиториях сразу: git worktree каждого репо в одной папке
 # + отдельный workspace в herdr.
 #
-#   feat new <name> [--base <ref>]   создать worktree во всех репо и открыть workspace
-#   feat rm  <name> [--force]        закрыть workspace и удалить worktree (ветки остаются)
-#   feat ls                          список фич
+#   feat new <name> [--deck] [--base <ref>]   создать worktree во всех репо и открыть workspace
+#   feat rm  <name> [--force]                 закрыть workspace и удалить worktree (ветки остаются)
+#   feat ls                                   список фич
 #
+# Набор репо (профиль): по умолчанию panel — services + panel;
+# --deck — services + cloud-staff.
 # Без аргументов (например, из попапа herdr) спрашивает, что сделать.
 set -euo pipefail
 
 PROJECTS="${FEAT_PROJECTS:-$HOME/projects}"
 FEATURES="${FEAT_DIR:-$PROJECTS/features}"
-REPOS=(${FEAT_REPOS:-services panel})
 HERDR="${HERDR:-$(command -v herdr || echo "$HOME/.local/bin/herdr")}"
+
+declare -A PROFILES=(
+  [panel]="${FEAT_REPOS_PANEL:-services panel}"
+  [deck]="${FEAT_REPOS_DECK:-services cloud-staff}"
+)
+PROFILE=panel
 
 die() { echo "feat: $*" >&2; exit 1; }
 log() { echo "• $*"; }
@@ -35,14 +42,18 @@ cmd_new() {
   while (($#)); do
     case $1 in
       --base) base=${2:?}; shift 2 ;;
+      --deck) PROFILE=deck; shift ;;
+      --panel) PROFILE=panel; shift ;;
       -*) die "неизвестный флаг $1" ;;
       *) name=$1; shift ;;
     esac
   done
   [[ -n $name ]] || die "укажи имя: feat new <name>"
 
+  local -a REPOS=(${PROFILES[$PROFILE]})
   local dir="$FEATURES/${name//\//-}"
   mkdir -p "$dir"
+  log "профиль $PROFILE: ${REPOS[*]}"
 
   for r in "${REPOS[@]}"; do
     local repo="$PROJECTS/$r" wt="$dir/$r"
@@ -85,6 +96,20 @@ cmd_new() {
   log "готово: $dir"
 }
 
+# подкаталоги папки фичи, которые являются git worktree (.git — файл, а не папка)
+feature_repos() {
+  local d
+  for d in "$1"/*/; do
+    [[ -f $d.git ]] && basename "$d"
+  done
+  return 0
+}
+
+# основной репозиторий, к которому относится worktree
+main_repo() {
+  dirname "$(git -C "$1" rev-parse --path-format=absolute --git-common-dir)"
+}
+
 cmd_rm() {
   local name="" force=()
   while (($#)); do
@@ -97,6 +122,9 @@ cmd_rm() {
   [[ -n $name ]] || die "укажи имя: feat rm <name>"
   local dir="$FEATURES/${name//\//-}"
   [[ -d $dir ]] || die "нет фичи $dir"
+
+  local -a REPOS
+  mapfile -t REPOS < <(feature_repos "$dir")
 
   # сначала проверяем все репо, чтобы не удалить половину
   if ((${#force[@]} == 0)); then
@@ -118,7 +146,7 @@ cmd_rm() {
   for r in "${REPOS[@]}"; do
     local wt="$dir/$r"
     [[ -e $wt ]] || continue
-    git -C "$PROJECTS/$r" worktree remove "${force[@]}" "$wt"
+    git -C "$(main_repo "$wt")" worktree remove "${force[@]}" "$wt"
     log "$r: worktree удалён (ветка $name осталась)"
   done
 
@@ -132,8 +160,7 @@ cmd_ls() {
     [[ -d $d ]] || continue
     local line
     line=$(basename "$d")
-    for r in "${REPOS[@]}"; do
-      [[ -e $d$r ]] || continue
+    for r in $(feature_repos "$d"); do
       local br dirty=""
       br=$(git -C "$d$r" branch --show-current 2>/dev/null || echo '?')
       [[ -n $(git -C "$d$r" status --porcelain 2>/dev/null) ]] && dirty="*"
@@ -146,7 +173,7 @@ cmd_ls() {
 interactive() {
   cmd_ls
   echo
-  read -rp "new <name> | rm <name> [--force]: " -a args
+  read -rp "new <name> [--deck] | rm <name> [--force]: " -a args
   ((${#args[@]})) || exit 0
   (main "${args[@]}") || true # чтобы ошибку было видно до закрытия попапа
   read -rp "Enter — закрыть" _
@@ -160,7 +187,7 @@ main() {
     rm) cmd_rm "$@" ;;
     ls) cmd_ls ;;
     "") interactive ;;
-    -h | --help | help) sed -n '2,9p' "$0" | sed 's/^# \{0,1\}//' ;;
+    -h | --help | help) sed -n '2,11p' "$0" | sed 's/^# \{0,1\}//' ;;
     *) die "неизвестная команда $cmd (new | rm | ls)" ;;
   esac
 }
