@@ -1,0 +1,168 @@
+#!/usr/bin/env bash
+# feat — фича в нескольких репозиториях сразу: git worktree каждого репо в одной папке
+# + отдельный workspace в herdr.
+#
+#   feat new <name> [--base <ref>]   создать worktree во всех репо и открыть workspace
+#   feat rm  <name> [--force]        закрыть workspace и удалить worktree (ветки остаются)
+#   feat ls                          список фич
+#
+# Без аргументов (например, из попапа herdr) спрашивает, что сделать.
+set -euo pipefail
+
+PROJECTS="${FEAT_PROJECTS:-$HOME/projects}"
+FEATURES="${FEAT_DIR:-$PROJECTS/features}"
+REPOS=(${FEAT_REPOS:-services panel})
+HERDR="${HERDR:-$(command -v herdr || echo "$HOME/.local/bin/herdr")}"
+
+die() { echo "feat: $*" >&2; exit 1; }
+log() { echo "• $*"; }
+
+# id workspace в herdr по метке (пусто, если нет или herdr не запущен)
+workspace_id() {
+  "$HERDR" workspace list 2>/dev/null |
+    jq -r --arg l "$1" '.result.workspaces[]? | select(.label == $l) | .workspace_id' |
+    head -n1 || true
+}
+
+default_ref() {
+  local repo=$1 head
+  head=$(git -C "$repo" symbolic-ref -q --short refs/remotes/origin/HEAD) || head=origin/main
+  echo "$head"
+}
+
+cmd_new() {
+  local name="" base=""
+  while (($#)); do
+    case $1 in
+      --base) base=${2:?}; shift 2 ;;
+      -*) die "неизвестный флаг $1" ;;
+      *) name=$1; shift ;;
+    esac
+  done
+  [[ -n $name ]] || die "укажи имя: feat new <name>"
+
+  local dir="$FEATURES/${name//\//-}"
+  mkdir -p "$dir"
+
+  for r in "${REPOS[@]}"; do
+    local repo="$PROJECTS/$r" wt="$dir/$r"
+    [[ -d $repo/.git || -f $repo/.git ]] || die "нет репозитория $repo"
+    if [[ -e $wt ]]; then
+      log "$r: уже есть $wt"
+      continue
+    fi
+    git -C "$repo" fetch --quiet origin || log "$r: fetch не удался, беру что есть локально"
+    if git -C "$repo" show-ref --verify --quiet "refs/heads/$name"; then
+      log "$r: ветка $name уже есть — подключаю её"
+      git -C "$repo" worktree add --quiet "$wt" "$name"
+    else
+      local from=${base:-$(default_ref "$repo")}
+      log "$r: новая ветка $name от $from"
+      git -C "$repo" worktree add --quiet --no-track -b "$name" "$wt" "$from"
+    fi
+  done
+
+  if [[ ! -e $dir/CLAUDE.md ]]; then
+    {
+      echo "# Фича $name"
+      echo
+      echo "Эта папка объединяет git worktree нескольких репозиториев, все на ветке \`$name\`:"
+      for r in "${REPOS[@]}"; do echo "- \`./$r\`"; done
+      echo
+      echo "Сама папка не репозиторий: git-команды выполняй внутри нужного подкаталога."
+    } >"$dir/CLAUDE.md"
+  fi
+
+  local id
+  id=$(workspace_id "$name")
+  if [[ -n $id ]]; then
+    "$HERDR" workspace focus "$id" >/dev/null && log "workspace $name уже открыт — переключился"
+  elif "$HERDR" workspace create --cwd "$dir" --label "$name" --focus >/dev/null 2>&1; then
+    log "workspace $name создан"
+  else
+    log "herdr не запущен — workspace не создан (папка: $dir)"
+  fi
+  log "готово: $dir"
+}
+
+cmd_rm() {
+  local name="" force=()
+  while (($#)); do
+    case $1 in
+      -f | --force) force=(--force); shift ;;
+      -*) die "неизвестный флаг $1" ;;
+      *) name=$1; shift ;;
+    esac
+  done
+  [[ -n $name ]] || die "укажи имя: feat rm <name>"
+  local dir="$FEATURES/${name//\//-}"
+  [[ -d $dir ]] || die "нет фичи $dir"
+
+  # сначала проверяем все репо, чтобы не удалить половину
+  if ((${#force[@]} == 0)); then
+    for r in "${REPOS[@]}"; do
+      local wt="$dir/$r"
+      [[ -e $wt ]] || continue
+      if [[ -n $(git -C "$wt" status --porcelain) ]]; then
+        die "$r: есть незакоммиченные изменения в $wt (используй --force)"
+      fi
+    done
+  fi
+
+  local id
+  id=$(workspace_id "$name")
+  if [[ -n $id ]]; then
+    "$HERDR" workspace close "$id" >/dev/null && log "workspace $name закрыт"
+  fi
+
+  for r in "${REPOS[@]}"; do
+    local wt="$dir/$r"
+    [[ -e $wt ]] || continue
+    git -C "$PROJECTS/$r" worktree remove "${force[@]}" "$wt"
+    log "$r: worktree удалён (ветка $name осталась)"
+  done
+
+  rm -f "$dir/CLAUDE.md"
+  rmdir "$dir" 2>/dev/null || log "в $dir остались файлы — не удаляю папку"
+}
+
+cmd_ls() {
+  [[ -d $FEATURES ]] || return 0
+  for d in "$FEATURES"/*/; do
+    [[ -d $d ]] || continue
+    local line
+    line=$(basename "$d")
+    for r in "${REPOS[@]}"; do
+      [[ -e $d$r ]] || continue
+      local br dirty=""
+      br=$(git -C "$d$r" branch --show-current 2>/dev/null || echo '?')
+      [[ -n $(git -C "$d$r" status --porcelain 2>/dev/null) ]] && dirty="*"
+      line+="  $r:${br:-detached}$dirty"
+    done
+    echo "$line"
+  done
+}
+
+interactive() {
+  cmd_ls
+  echo
+  read -rp "new <name> | rm <name> [--force]: " -a args
+  ((${#args[@]})) || exit 0
+  (main "${args[@]}") || true # чтобы ошибку было видно до закрытия попапа
+  read -rp "Enter — закрыть" _
+}
+
+main() {
+  local cmd=${1:-}
+  shift || true
+  case $cmd in
+    new) cmd_new "$@" ;;
+    rm) cmd_rm "$@" ;;
+    ls) cmd_ls ;;
+    "") interactive ;;
+    -h | --help | help) sed -n '2,9p' "$0" | sed 's/^# \{0,1\}//' ;;
+    *) die "неизвестная команда $cmd (new | rm | ls)" ;;
+  esac
+}
+
+main "$@"

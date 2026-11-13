@@ -104,6 +104,10 @@ alias lvim='NVIM_APPNAME=nvim2 nvim'
 
 # Example: Use Cyan for suggestions
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#7f838e"
+
+# zsh-syntax-highlighting: comments gray instead of default black
+typeset -A ZSH_HIGHLIGHT_STYLES
+ZSH_HIGHLIGHT_STYLES[comment]="fg=#7f838e"
 export EDITOR=nvim
 export AGENT_BROWSER_EXECUTABLE_PATH=/usr/bin/google-chrome
 

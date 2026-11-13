@@ -53,6 +53,10 @@ export XDG_CONFIG_HOME="$HOME/.config"
 # Example: Use Cyan for suggestions
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#7f838e"
 
+# zsh-syntax-highlighting: comments gray instead of default black
+typeset -A ZSH_HIGHLIGHT_STYLES
+ZSH_HIGHLIGHT_STYLES[comment]="fg=#7f838e"
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 #fzf
